@@ -27,7 +27,7 @@ export default function Stats() {
   return (
     <Section className="bg-primary text-white" id="stats">
       <div className="mx-auto max-w-4xl text-center">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-white">
           Our Impact in Numbers
         </h2>
         <p className="mt-6 text-lg leading-8 text-white/80">

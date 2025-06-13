@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,7 +12,8 @@ const inter = Inter({
 
 export const metadata = {
   title: "FinanceHub - Smart Financial Solutions",
-  description: "Expert financial guidance to help you achieve your goals. We combine cutting-edge technology with personalized service to secure your financial future.",
+  description:
+    "Expert financial guidance to help you achieve your goals. We combine cutting-edge technology with personalized service to secure your financial future.",
 };
 
 export default function RootLayout({ children }) {
@@ -20,10 +22,9 @@ export default function RootLayout({ children }) {
       <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider>
           <Navbar />
-          <main className="pt-0">
-            {children}
-          </main>
-          <Toaster position="top-right" />
+          <main className="pt-0">{children}</main>
+          {/* <Toaster position="top-right" /> */}
+          <Footer />
         </AuthProvider>
       </body>
     </html>
