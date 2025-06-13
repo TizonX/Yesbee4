@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-background-light text-accent-dark font-sans text-body-base;
+  }
+
+  /* Responsive Typography */
+  h1 {
+    @apply font-display font-bold tracking-tight text-primary;
+    @apply text-display-lg md:text-display-xl lg:text-display-2xl;
+  }
+
+  h2 {
+    @apply font-display font-bold tracking-tight text-primary;
+    @apply text-display-md md:text-display-lg lg:text-display-xl;
+  }
+
+  h3 {
+    @apply font-display font-bold tracking-tight text-primary;
+    @apply text-display-sm md:text-display-md lg:text-display-lg;
+  }
+
+  h4 {
+    @apply font-display font-bold tracking-tight text-primary;
+    @apply text-display-xs md:text-display-sm lg:text-display-md;
+  }
+
+  h5 {
+    @apply font-display font-bold tracking-tight text-primary;
+    @apply text-body-xl md:text-display-xs lg:text-display-sm;
+  }
+
+  h6 {
+    @apply font-display font-bold tracking-tight text-primary;
+    @apply text-body-lg md:text-body-xl lg:text-display-xs;
+  }
+
+  p {
+    @apply text-body-base md:text-body-lg leading-relaxed;
+  }
+
+  small {
+    @apply text-body-sm text-accent-dark;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-dark focus:ring-primary;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary;
+  }
+
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+}
+
+/* Custom Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}

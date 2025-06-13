@@ -1,0 +1,31 @@
+import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./context/AuthContext";
+import "./globals.css";
+import Navbar from "./components/Navbar";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+export const metadata = {
+  title: "FinanceHub - Smart Financial Solutions",
+  description: "Expert financial guidance to help you achieve your goals. We combine cutting-edge technology with personalized service to secure your financial future.",
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className="scroll-smooth">
+      <body className={`${inter.variable} font-sans antialiased`}>
+        <AuthProvider>
+          <Navbar />
+          <main className="pt-0">
+            {children}
+          </main>
+          <Toaster position="top-right" />
+        </AuthProvider>
+      </body>
+    </html>
+  );
+}
