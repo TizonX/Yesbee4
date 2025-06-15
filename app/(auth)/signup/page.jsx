@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signupSchema } from '@/app/lib/validations/auth';
-import { useAuth } from '@/app/context/AuthContext';
-import Input from '@/app/components/ui/Input';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema } from "@/app/lib/validations/auth";
+import { useAuth } from "@/app/context/AuthContext";
+import Input from "@/app/components/ui/Input";
 
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,17 +18,23 @@ export default function SignupPage() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: zodResolver(signupSchema),
   });
 
+  const formValues = watch();
+
   const onSubmit = async (data) => {
     try {
+      console.log("Form data:", data);
+      console.log("Form errors:", errors);
+      console.log("Current form values:", formValues);
       setIsLoading(true);
       await signup(data.name, data.email, data.password);
-      router.push('/dashboard');
+      router.push("/dashboard");
     } catch (error) {
-      console.error('Signup failed:', error);
+      console.error("Signup failed:", error);
     } finally {
       setIsLoading(false);
     }
@@ -40,9 +46,9 @@ export default function SignupPage() {
         <div className="text-center">
           <h2 className="text-3xl font-bold text-primary">Create an account</h2>
           <p className="mt-2 text-sm text-gray-600">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link
-              href="/auth/login"
+              href="/login"
               className="font-medium text-primary hover:text-primary-dark transition-colors"
             >
               Sign in
@@ -56,7 +62,7 @@ export default function SignupPage() {
               label="Full name"
               type="text"
               autoComplete="name"
-              {...register('name')}
+              {...register("name")}
               error={errors.name?.message}
             />
 
@@ -64,7 +70,7 @@ export default function SignupPage() {
               label="Email address"
               type="email"
               autoComplete="email"
-              {...register('email')}
+              {...register("email")}
               error={errors.email?.message}
             />
 
@@ -72,7 +78,7 @@ export default function SignupPage() {
               label="Password"
               type="password"
               autoComplete="new-password"
-              {...register('password')}
+              {...register("password")}
               error={errors.password?.message}
             />
 
@@ -80,7 +86,7 @@ export default function SignupPage() {
               label="Confirm password"
               type="password"
               autoComplete="new-password"
-              {...register('confirmPassword')}
+              {...register("confirmPassword")}
               error={errors.confirmPassword?.message}
             />
           </div>
@@ -90,20 +96,17 @@ export default function SignupPage() {
               id="terms"
               type="checkbox"
               className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-              {...register('terms')}
+              {...register("terms")}
             />
-            <label
-              htmlFor="terms"
-              className="ml-2 block text-sm text-gray-900"
-            >
-              I agree to the{' '}
+            <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
+              I agree to the{" "}
               <Link
                 href="/terms"
                 className="font-medium text-primary hover:text-primary-dark transition-colors"
               >
                 Terms of Service
-              </Link>{' '}
-              and{' '}
+              </Link>{" "}
+              and{" "}
               <Link
                 href="/privacy"
                 className="font-medium text-primary hover:text-primary-dark transition-colors"
@@ -121,10 +124,10 @@ export default function SignupPage() {
             disabled={isLoading}
             className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Creating account...' : 'Create account'}
+            {isLoading ? "Creating account..." : "Create account"}
           </button>
         </form>
       </div>
     </div>
   );
-} 
+}

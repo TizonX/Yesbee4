@@ -4,7 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
+import { cookies } from "next/headers";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -17,10 +17,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const token = cookies().get("token")?.value;
+  const isLoggedIn = !!token;
+  
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased`}>
-        <AuthProvider>
+        <AuthProvider isLoggedIn={isLoggedIn}>
           <Navbar />
           <main className="pt-0">{children}</main>
           {/* <Toaster position="top-right" /> */}
