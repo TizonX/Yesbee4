@@ -193,7 +193,7 @@ export default function CheckoutPage() {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-6">
+            <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-24">
               <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
               {selectedProducts.length > 0 ? (
                 <div className="space-y-4">
