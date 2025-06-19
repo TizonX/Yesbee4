@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "ttps://randomsaas.azurewebsites.net";
 
 export const apiRequest = async ({
