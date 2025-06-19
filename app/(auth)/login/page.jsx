@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '@/app/lib/validations/auth';
-import { useAuth } from '@/app/context/AuthContext';
-import Input from '@/app/components/ui/Input';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/app/lib/validations/auth";
+import { useAuth } from "@/app/context/AuthContext";
+import Input from "@/app/components/ui/Input";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,9 +26,9 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
       await login(data.email, data.password);
-      router.push('/dashboard');
+      router.push("/");
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
     } finally {
       setIsLoading(false);
     }
@@ -40,7 +40,7 @@ export default function LoginPage() {
         <div className="text-center">
           <h2 className="text-3xl font-bold text-primary">Welcome back</h2>
           <p className="mt-2 text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don't have an account?{" "}
             <Link
               href="/auth/signup"
               className="font-medium text-primary hover:text-primary-dark transition-colors"
@@ -56,7 +56,7 @@ export default function LoginPage() {
               label="Email address"
               type="email"
               autoComplete="email"
-              {...register('email')}
+              {...register("email")}
               error={errors.email?.message}
             />
 
@@ -64,7 +64,7 @@ export default function LoginPage() {
               label="Password"
               type="password"
               autoComplete="current-password"
-              {...register('password')}
+              {...register("password")}
               error={errors.password?.message}
             />
           </div>
@@ -100,10 +100,10 @@ export default function LoginPage() {
             disabled={isLoading}
             className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Signing in...' : 'Sign in'}
+            {isLoading ? "Signing in..." : "Sign in"}
           </button>
         </form>
       </div>
     </div>
   );
-} 
+}

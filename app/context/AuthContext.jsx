@@ -16,7 +16,7 @@ export function AuthProvider({ children, isLoggedIn }) {
 
   const checkAuth = async () => {
     try {
-      const data = await apiRequest({ url: "/auth/me" });
+      const data = await apiRequest({ url: "/users/me" });
       setUser(data.user);
     } catch (error) {
       setUser(null);
@@ -28,8 +28,8 @@ export function AuthProvider({ children, isLoggedIn }) {
   const login = async (email, password) => {
     const data = await apiRequest({
       method: "POST",
-      url: "/auth/login",
-      data: { email, password },
+      url: "/users/login",
+      data: { username: email, password },
       showSuccessToast: true,
       successMessage: "Welcome back!",
     });
