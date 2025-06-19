@@ -19,14 +19,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const token = cookies().get("token")?.value;
   const isLoggedIn = !!token;
-  
+
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider isLoggedIn={isLoggedIn}>
           <Navbar />
           <main className="pt-0">{children}</main>
-          {/* <Toaster position="top-right" /> */}
+          <Toaster position="bottom-center" />
           <Footer />
         </AuthProvider>
       </body>

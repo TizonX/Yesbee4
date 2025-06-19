@@ -1,15 +1,15 @@
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
 export const apiRequest = async ({
-  method = 'GET',
+  method = "GET",
   url,
   data,
   headers,
   showSuccessToast = false,
-  successMessage = 'Success!',
+  successMessage = "Success!",
   ...config
 }) => {
   try {
@@ -18,7 +18,7 @@ export const apiRequest = async ({
       url: `${BASE_URL}${url}`,
       data,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...headers,
       },
       ...config,
@@ -30,8 +30,12 @@ export const apiRequest = async ({
 
     return response.data;
   } catch (error) {
-    const message = error.response?.data?.message || error.message || 'Something went wrong';
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.detail ||
+      error.message ||
+      "Something went wrong";
     toast.error(message);
     throw error;
   }
-}; 
+};

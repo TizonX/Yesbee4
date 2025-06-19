@@ -1,7 +1,8 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { toast } from 'react-hot-toast';
+import axios, { AxiosRequestConfig } from "axios";
+import { toast } from "react-hot-toast";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://randomsaas.azurewebsites.net";
 
 interface ApiRequestConfig extends AxiosRequestConfig {
   showSuccessToast?: boolean;
@@ -9,12 +10,12 @@ interface ApiRequestConfig extends AxiosRequestConfig {
 }
 
 export const apiRequest = async ({
-  method = 'GET',
+  method = "GET",
   url,
   data,
   headers,
   showSuccessToast = false,
-  successMessage = 'Success!',
+  successMessage = "Success!",
   ...config
 }: ApiRequestConfig) => {
   try {
@@ -23,7 +24,7 @@ export const apiRequest = async ({
       url: `${BASE_URL}${url}`,
       data,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...headers,
       },
       ...config,
@@ -35,8 +36,13 @@ export const apiRequest = async ({
 
     return response.data;
   } catch (error: any) {
-    const message = error.response?.data?.message || error.message || 'Something went wrong';
-    toast.error(message);
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.detail ||
+      error.message ||
+      "Something went wrong";
+    console.log("message : ", message);
+    // toast.error(message);
     throw error;
   }
-}; 
+};

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { apiRequest } from "../lib/api";
-
+import toast from "react-hot-toast";
 const AuthContext = createContext({ isLoggedIn: false });
 
 export function AuthProvider({ children, isLoggedIn }) {
@@ -36,11 +36,11 @@ export function AuthProvider({ children, isLoggedIn }) {
     setUser(data.user);
   };
 
-  const signup = async (name, email, password) => {
+  const signup = async (name, email, phone, password) => {
     const data = await apiRequest({
       method: "POST",
-      url: "/auth/signup",
-      data: { name, email, password },
+      url: "/users/register",
+      data: { name, email, phone, password },
       showSuccessToast: true,
       successMessage: "Account created successfully!",
     });

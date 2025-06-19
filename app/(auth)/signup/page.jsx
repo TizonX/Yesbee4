@@ -27,14 +27,11 @@ export default function SignupPage() {
 
   const onSubmit = async (data) => {
     try {
-      console.log("Form data:", data);
-      console.log("Form errors:", errors);
-      console.log("Current form values:", formValues);
       setIsLoading(true);
-      await signup(data.name, data.email, data.password);
-      router.push("/dashboard");
+      await signup(data.name, data.email, data.phone, data.password);
+      router.push("/");
     } catch (error) {
-      console.error("Signup failed:", error);
+      console.log("error : ", error);
     } finally {
       setIsLoading(false);
     }
@@ -72,6 +69,14 @@ export default function SignupPage() {
               autoComplete="email"
               {...register("email")}
               error={errors.email?.message}
+            />
+
+            <Input
+              label="Phone number"
+              type="tel"
+              autoComplete="tel"
+              {...register("phone")}
+              error={errors.phone?.message}
             />
 
             <Input
