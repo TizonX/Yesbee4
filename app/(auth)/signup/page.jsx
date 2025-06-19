@@ -14,6 +14,7 @@ export default function SignupPage() {
   const router = useRouter();
   const { signup } = useAuth();
 
+  
   const {
     register,
     handleSubmit,
