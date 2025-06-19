@@ -29,7 +29,7 @@ export default function SignupPage() {
     try {
       setIsLoading(true);
       await signup(data.name, data.email, data.phone, data.password);
-      router.push("/");
+      router.push("/login");
     } catch (error) {
       console.log("error : ", error);
     } finally {
