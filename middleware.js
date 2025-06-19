@@ -40,6 +40,7 @@ export function middleware(req) {
   response.headers.set("x-debug-token", token || "no-token");
   return response;
 }
+
 export const config = {
   matcher: [
     /*
