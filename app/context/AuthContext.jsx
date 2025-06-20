@@ -1,19 +1,26 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { apiRequest } from "../lib/api";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 const AuthContext = createContext({ isLoggedIn: false });
 
-export function AuthProvider({ children, isLoggedIn }) {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const hasCheckedAuth = useRef(false);
 
   useEffect(() => {
-    if (!isLoggedIn) return;
-    checkAuth();
-  }, [isLoggedIn]);
+    // Only call checkAuth if session_token is present in cookies and not already checked
+    const token = Cookies.get("session_token");
+    if (token && !hasCheckedAuth.current) {
+      hasCheckedAuth.current = true;
+      checkAuth();
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
 
   const checkAuth = async () => {
     try {
@@ -38,7 +45,7 @@ export function AuthProvider({ children, isLoggedIn }) {
       localStorage.setItem("session_token", data?.data?.access_token);
       // Also store in cookies
       Cookies.set("session_token", data?.data?.access_token, { expires: 7 }); // Expires in 7 days
-      // router.push("/");
+      await checkAuth(); // Call checkAuth after cookie is set
       window.location.href = "/";
     }
     setUser(data.user);
@@ -67,7 +74,7 @@ export function AuthProvider({ children, isLoggedIn }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, login, signup, logout, isLoggedIn }}
+      value={{ user, isLoading, login, signup, logout, isLoggedIn: !!user }}
     >
       {children}
     </AuthContext.Provider>
