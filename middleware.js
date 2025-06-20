@@ -5,7 +5,7 @@ export function middleware(req) {
 
   // Check for token in Authorization header first, then fallback to cookie
   const authHeader = req.headers.get("authorization");
-  const cookieToken = req.cookies.get("token")?.value;
+  const cookieToken = req.cookies.get("session_token")?.value;
   const token = authHeader ? authHeader.split(" ")[1] : cookieToken;
 
   const isLoggedIn = !!token;
