@@ -29,7 +29,7 @@ export function AuthProvider({ children, isLoggedIn }) {
     const data = await apiRequest({
       method: "POST",
       url: "/users/login",
-      data: { username: email, password },
+      data: { email, password },
       showSuccessToast: true,
       successMessage: "Welcome back!",
     });
