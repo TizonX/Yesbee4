@@ -163,7 +163,7 @@ export default function Navbar() {
                       />
                     ) : (
                       <span className="flex items-center justify-center w-full h-full text-white">
-                        {user.name[0]}
+                        {user?.fullname}
                       </span>
                     )}
                   </div>
@@ -338,7 +338,7 @@ export default function Navbar() {
                         />
                       ) : (
                         <span className="flex items-center justify-center w-full h-full text-white text-lg">
-                          {user.name[0]}
+                          {user?.fullname}
                         </span>
                       )}
                     </div>

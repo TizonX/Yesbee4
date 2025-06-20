@@ -7,7 +7,7 @@ export function middleware(req) {
   const authHeader = req.headers.get("authorization");
   const cookieToken = req.cookies.get("session_token")?.value;
   const token = authHeader ? authHeader.split(" ")[1] : cookieToken;
-
+  console.log("token : ", token);
   const isLoggedIn = !!token;
   const { pathname } = req.nextUrl;
 

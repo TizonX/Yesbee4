@@ -15,16 +15,13 @@ export function AuthProvider({ children }, isLoggedIn) {
 
   useEffect(() => {
     // if (isLoggedIn) return;
-
-    setTimeout(() => {
-      checkAuth();
-    }, 5000);
+    checkAuth();
   }, []);
 
   const checkAuth = async () => {
     try {
       const data = await apiRequest({ url: "/users/me" });
-      setUser(data.user);
+      setUser(data.data);
     } catch (error) {
       setUser(null);
     } finally {
@@ -41,7 +38,7 @@ export function AuthProvider({ children }, isLoggedIn) {
       successMessage: "Welcome back!",
     });
     // await checkAuth(); // Call checkAuth after backend sets cookie
-    setUser(data.user);
+    // setUser(data.user);
     router.push("/"); // Redirect to home page
   };
 
@@ -53,7 +50,7 @@ export function AuthProvider({ children }, isLoggedIn) {
       showSuccessToast: true,
       successMessage: "Account created successfully!",
     });
-    setUser(data.user);
+    // setUser(data.user);
   };
 
   const logout = async () => {
@@ -64,7 +61,7 @@ export function AuthProvider({ children }, isLoggedIn) {
       successMessage: "Logged out successfully",
     });
     setUser(null);
-    router.push("/auth/login"); // Redirect to login page after logout
+    router.push("/login"); // Redirect to login page after logout
   };
 
   return (
