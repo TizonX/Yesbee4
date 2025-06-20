@@ -4,22 +4,21 @@ import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { apiRequest } from "../lib/api";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 const AuthContext = createContext({ isLoggedIn: false });
 
-export function AuthProvider({ children }) {
+export function AuthProvider({ children }, isLoggedIn) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const hasCheckedAuth = useRef(false);
+  const router = useRouter();
 
   useEffect(() => {
-    // Only call checkAuth if session_token is present in cookies and not already checked
-    const token = Cookies.get("session_token");
-    if (token && !hasCheckedAuth.current) {
-      hasCheckedAuth.current = true;
+    // if (isLoggedIn) return;
+
+    setTimeout(() => {
       checkAuth();
-    } else {
-      setIsLoading(false);
-    }
+    }, 5000);
   }, []);
 
   const checkAuth = async () => {
@@ -41,14 +40,9 @@ export function AuthProvider({ children }) {
       showSuccessToast: true,
       successMessage: "Welcome back!",
     });
-    if (data.data.access_token) {
-      localStorage.setItem("session_token", data?.data?.access_token);
-      // Also store in cookies
-      Cookies.set("session_token", data?.data?.access_token, { expires: 7 }); // Expires in 7 days
-      await checkAuth(); // Call checkAuth after cookie is set
-      window.location.href = "/";
-    }
+    // await checkAuth(); // Call checkAuth after backend sets cookie
     setUser(data.user);
+    router.push("/"); // Redirect to home page
   };
 
   const signup = async (name, email, phone, password) => {
@@ -70,6 +64,7 @@ export function AuthProvider({ children }) {
       successMessage: "Logged out successfully",
     });
     setUser(null);
+    router.push("/auth/login"); // Redirect to login page after logout
   };
 
   return (

@@ -17,8 +17,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const token = cookies().get("session_token")?.value;
-  const isLoggedIn = !!token;
+  const cookieStore = cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+  console.log("accessToken", accessToken);
+  const isLoggedIn = accessToken ? true : false
 
   return (
     <html lang="en" className="scroll-smooth">
