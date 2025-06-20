@@ -27,9 +27,9 @@ export default function LoginPage() {
       setIsLoading(true);
       const res = await login(data.email, data.password);
       if (res) {
-        localStorage.setItem("access_token", res?.data?.access_token);
+        localStorage.setItem("session_token", res?.data?.access_token);
         // Also store in cookies
-        Cookies.set("access_token", res?.data?.access_token, { expires: 7 }); // Expires in 7 days
+        Cookies.set("session_token", res?.data?.access_token, { expires: 7 }); // Expires in 7 days
         // router.push("/");
         window.location.href = "/";
       }
