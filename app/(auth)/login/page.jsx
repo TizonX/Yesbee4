@@ -25,14 +25,7 @@ export default function LoginPage() {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      const res = await login(data.email, data.password);
-      if (res) {
-        localStorage.setItem("session_token", res?.data?.access_token);
-        // Also store in cookies
-        Cookies.set("session_token", res?.data?.access_token, { expires: 7 }); // Expires in 7 days
-        // router.push("/");
-        window.location.href = "/";
-      }
+      await login(data.email, data.password);
     } catch (error) {
       console.error("Login failed:", error);
     } finally {

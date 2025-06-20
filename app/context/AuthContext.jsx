@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { apiRequest } from "../lib/api";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 const AuthContext = createContext({ isLoggedIn: false });
 
 export function AuthProvider({ children, isLoggedIn }) {
@@ -14,7 +15,6 @@ export function AuthProvider({ children, isLoggedIn }) {
     checkAuth();
   }, []);
 
-  
   const checkAuth = async () => {
     try {
       const data = await apiRequest({ url: "/users/me" });
@@ -34,6 +34,14 @@ export function AuthProvider({ children, isLoggedIn }) {
       showSuccessToast: true,
       successMessage: "Welcome back!",
     });
+    console.log("data : ", data);
+    if (data.data.access_token) {
+      localStorage.setItem("session_token", data?.data?.access_token);
+      // Also store in cookies
+      Cookies.set("session_token", data?.data?.access_token, { expires: 7 }); // Expires in 7 days
+      // router.push("/");
+      window.location.href = "/";
+    }
     setUser(data.user);
   };
 
