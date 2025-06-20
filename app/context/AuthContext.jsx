@@ -14,6 +14,7 @@ export function AuthProvider({ children, isLoggedIn }) {
     checkAuth();
   }, []);
 
+  
   const checkAuth = async () => {
     try {
       const data = await apiRequest({ url: "/users/me" });
