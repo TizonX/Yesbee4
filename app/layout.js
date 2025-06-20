@@ -17,7 +17,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const token = cookies().get("token")?.value;
+  const token = cookies().get("session_token")?.value;
   const isLoggedIn = !!token;
 
   return (

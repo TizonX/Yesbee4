@@ -18,6 +18,7 @@ export const apiRequest = async ({
       method,
       url: `${BASE_URL}${url}`,
       data,
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json",
         ...headers,

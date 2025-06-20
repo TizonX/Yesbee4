@@ -13,7 +13,7 @@ export function AuthProvider({ children, isLoggedIn }) {
   useEffect(() => {
     if (!isLoggedIn) return;
     checkAuth();
-  }, []);
+  }, [isLoggedIn]);
 
   const checkAuth = async () => {
     try {
@@ -34,7 +34,6 @@ export function AuthProvider({ children, isLoggedIn }) {
       showSuccessToast: true,
       successMessage: "Welcome back!",
     });
-    console.log("data : ", data);
     if (data.data.access_token) {
       localStorage.setItem("session_token", data?.data?.access_token);
       // Also store in cookies
