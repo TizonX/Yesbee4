@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "ttps://randomsaas.azurewebsites.net";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "ttps://randomsaas.azurewebsites.net";
 
 export const apiRequest = async ({
   method = "GET",
@@ -32,6 +32,7 @@ export const apiRequest = async ({
     return response.data;
   } catch (error) {
     const message =
+      error.response?.data?.error?.message ||
       error.response?.data?.message ||
       error.response?.data?.detail ||
       error.message ||
