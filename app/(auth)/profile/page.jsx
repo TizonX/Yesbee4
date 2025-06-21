@@ -5,23 +5,44 @@ import { useAuthGuard } from "@/utils/hooks/useAuthGuard";
 import { useAuth } from "@/app/context/AuthContext";
 import Container from "@/app/components/Container";
 import ProfileForm from "@/app/components/ProfileForm";
+import ProfileSkeleton from "@/utils/components/ProfileSkeleton";
 import { apiRequest } from "@/app/lib/api";
 
 export default function ProfilePage() {
   const { user, isLoading: isLoadingGuard } = useAuthGuard();
-  const { user: authUser, refreshUser } = useAuth();
+  const { user: authUser, refreshUser, isLoading: isLoadingAuth } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
-  // if (!isLoadingGuard) return null;
+  // Show skeleton while auth is loading or user is not available
+  if (isLoadingGuard || isLoadingAuth || !authUser) {
+    return (
+      <div className="min-h-screen bg-background-dark pt-20">
+        <Container>
+          <div className="max-w-4xl mx-auto py-8">
+            {/* Page Header Skeleton */}
+            <div className="mb-8">
+              <div className="w-64 h-8 bg-gray-200 rounded mb-2 animate-pulse"></div>
+              <div className="w-96 h-4 bg-gray-200 rounded animate-pulse"></div>
+            </div>
+
+            {/* Profile Form Card Skeleton */}
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <ProfileSkeleton />
+            </div>
+          </div>
+        </Container>
+      </div>
+    );
+  }
 
   const handleSaveProfile = async (updateData) => {
     setIsLoading(true);
-
+    
     try {
       // Create FormData if there's an image to upload
       let requestData;
       let headers = {};
-
+      
       if (updateData.profileImage) {
         const formData = new FormData();
         formData.append("fullname", updateData.fullname);
