@@ -51,7 +51,8 @@ export function AuthProvider({ children }, isLoggedIn) {
     });
     // await checkAuth(); // Call checkAuth after backend sets cookie
     // setUser(data.user);
-    router.push("/"); // Redirect to home page
+    // router.push("/"); // Redirect to home page
+    window.location.href = "/";
   };
 
   const signup = async (name, email, phone, password) => {

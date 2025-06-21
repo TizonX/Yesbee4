@@ -37,12 +37,12 @@ export default function ProfilePage() {
 
   const handleSaveProfile = async (updateData) => {
     setIsLoading(true);
-    
+
     try {
       // Create FormData if there's an image to upload
       let requestData;
       let headers = {};
-      
+
       if (updateData.profileImage) {
         const formData = new FormData();
         formData.append("fullname", updateData.fullname);
