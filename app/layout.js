@@ -17,15 +17,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const cookieStore = cookies()
-  const accessToken = cookieStore.get('access_token')?.value
-  // console.log("accessToken", accessToken);
-  const isLoggedIn = accessToken ? true : false
-
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased`}>
-        <AuthProvider isLoggedIn={isLoggedIn}>
+        <AuthProvider>
           <Navbar />
           <main className="pt-0">{children}</main>
           <Toaster position="bottom-center" />

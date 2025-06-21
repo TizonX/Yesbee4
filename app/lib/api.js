@@ -9,6 +9,7 @@ export const apiRequest = async ({
   data,
   headers,
   showSuccessToast = false,
+  showFailedToast = true,
   successMessage = "Success!",
   ...config
 }) => {
@@ -37,7 +38,7 @@ export const apiRequest = async ({
       error.response?.data?.detail ||
       error.message ||
       "Something went wrong";
-    toast.error(message);
+    if (showFailedToast) toast.error(message);
     throw error;
   }
 };

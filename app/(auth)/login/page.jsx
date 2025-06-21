@@ -8,12 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/app/lib/validations/auth";
 import { useAuth } from "@/app/context/AuthContext";
 import Input from "@/app/components/ui/Input";
-
+import { usePathGuard } from "@/utils/hooks/usePathGuard";
 export default function LoginPage() {
+  const { user, isLoading: isLoadingGuard } = usePathGuard();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
-
   const {
     register,
     handleSubmit,

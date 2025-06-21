@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 
-export const useAuthGuard = () => {
+export const usePathGuard = () => {
   const { user, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      router.push("/login");
+    if (user && !isLoading) {
+      router.push("/");
     }
   }, [user, router, isLoading]);
 

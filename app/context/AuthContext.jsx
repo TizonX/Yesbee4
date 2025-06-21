@@ -2,12 +2,10 @@
 
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { apiRequest } from "../lib/api";
-import toast from "react-hot-toast";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 const AuthContext = createContext({ isLoggedIn: false });
 
-export function AuthProvider({ children }, isLoggedIn) {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const hasCheckedAuth = useRef(false);
@@ -21,7 +19,10 @@ export function AuthProvider({ children }, isLoggedIn) {
 
   const checkAuth = async () => {
     try {
-      const data = await apiRequest({ url: "/users/me" });
+      const data = await apiRequest({
+        url: "/users/me",
+        showFailedToast: false,
+      });
       setUser(data.data);
     } catch (error) {
       setUser(null);
@@ -49,9 +50,6 @@ export function AuthProvider({ children }, isLoggedIn) {
       showSuccessToast: true,
       successMessage: "Welcome back!",
     });
-    // await checkAuth(); // Call checkAuth after backend sets cookie
-    // setUser(data.user);
-    // router.push("/"); // Redirect to home page
     window.location.href = "/";
   };
 
@@ -63,7 +61,6 @@ export function AuthProvider({ children }, isLoggedIn) {
       showSuccessToast: true,
       successMessage: "Account created successfully!",
     });
-    // setUser(data.user);
   };
 
   const logout = async () => {
