@@ -19,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const cookieStore = cookies()
   const accessToken = cookieStore.get('access_token')?.value
-  console.log("accessToken", accessToken);
+  // console.log("accessToken", accessToken);
   const isLoggedIn = accessToken ? true : false
 
   return (

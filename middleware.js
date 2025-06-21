@@ -5,9 +5,9 @@ export function middleware(req) {
 
   // Check for token in Authorization header first, then fallback to cookie
   const authHeader = req.headers.get("authorization");
-  const cookieToken = req.cookies.get("session_token")?.value;
+  const cookieToken = req.cookies.get("access_token")?.value;
   const token = authHeader ? authHeader.split(" ")[1] : cookieToken;
-  console.log("token : ", token);
+  // console.log("token : ", token);
   const isLoggedIn = !!token;
   const { pathname } = req.nextUrl;
 
@@ -16,7 +16,7 @@ export function middleware(req) {
   const isPublic = publicPaths.some((path) => pathname.startsWith(path));
 
   // Define protected paths (auth required)
-  const protectedPaths = ["/profile", "/orders", "/checkout"];
+  const protectedPaths = ["/orders", "/checkout"];
   const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
 
   // If user is NOT logged in and trying to access protected route, redirect to login
