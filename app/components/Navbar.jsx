@@ -29,6 +29,8 @@ const userMenuItems = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const { user, logout } = useAuth();
 
   // Handle scroll effect
@@ -39,6 +41,30 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMobileMenuOpen && !event.target.closest('nav')) {
+        setIsMobileMenuOpen(false);
+        setMobileProductsOpen(false);
+        setMobileSolutionsOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMobileMenuOpen]);
+
+  const toggleMobileDropdown = (dropdown) => {
+    if (dropdown === 'products') {
+      setMobileProductsOpen(!mobileProductsOpen);
+      setMobileSolutionsOpen(false);
+    } else if (dropdown === 'solutions') {
+      setMobileSolutionsOpen(!mobileSolutionsOpen);
+      setMobileProductsOpen(false);
+    }
+  };
 
   return (
     <nav
@@ -272,16 +298,37 @@ export default function Navbar() {
 
             {/* Mobile Products Dropdown */}
             <div className="space-y-1">
-              <div className="px-3 py-2 text-base font-medium text-primary">
+              <button
+                onClick={() => toggleMobileDropdown('products')}
+                className="w-full flex items-center justify-between px-3 py-2 text-base font-medium text-primary hover:text-primary-dark hover:bg-gray-50 rounded-md"
+              >
                 Products
-              </div>
-              <div className="pl-4">
+                <svg
+                  className={`w-4 h-4 transition-transform ${
+                    mobileProductsOpen ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <div className={`${mobileProductsOpen ? 'block' : 'hidden'} pl-4`}>
                 {products.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
                     className="block px-3 py-2 text-base font-medium text-primary hover:text-primary-dark hover:bg-gray-50"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setMobileProductsOpen(false);
+                    }}
                   >
                     {item.name}
                   </Link>
@@ -291,16 +338,37 @@ export default function Navbar() {
 
             {/* Mobile Solutions Dropdown */}
             <div className="space-y-1">
-              <div className="px-3 py-2 text-base font-medium text-primary">
+              <button
+                onClick={() => toggleMobileDropdown('solutions')}
+                className="w-full flex items-center justify-between px-3 py-2 text-base font-medium text-primary hover:text-primary-dark hover:bg-gray-50 rounded-md"
+              >
                 Solutions
-              </div>
-              <div className="pl-4">
+                <svg
+                  className={`w-4 h-4 transition-transform ${
+                    mobileSolutionsOpen ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <div className={`${mobileSolutionsOpen ? 'block' : 'hidden'} pl-4`}>
                 {solutions.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
                     className="block px-3 py-2 text-base font-medium text-primary hover:text-primary-dark hover:bg-gray-50"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setMobileSolutionsOpen(false);
+                    }}
                   >
                     {item.name}
                   </Link>
