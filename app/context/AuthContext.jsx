@@ -14,7 +14,8 @@ export function AuthProvider({ children }, isLoggedIn) {
   const router = useRouter();
 
   useEffect(() => {
-    // if (isLoggedIn) return;
+    if (hasCheckedAuth.current) return;
+    hasCheckedAuth.current = true;
     checkAuth();
   }, []);
 
@@ -26,6 +27,17 @@ export function AuthProvider({ children }, isLoggedIn) {
       setUser(null);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const refreshUser = async () => {
+    try {
+      const data = await apiRequest({ url: "/users/me" });
+      setUser(data.data);
+      return data.data;
+    } catch (error) {
+      setUser(null);
+      throw error;
     }
   };
 
@@ -66,7 +78,15 @@ export function AuthProvider({ children }, isLoggedIn) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, login, signup, logout, isLoggedIn: !!user }}
+      value={{
+        user,
+        isLoading,
+        login,
+        signup,
+        logout,
+        refreshUser,
+        isLoggedIn: !!user,
+      }}
     >
       {children}
     </AuthContext.Provider>
