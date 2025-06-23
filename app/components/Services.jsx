@@ -1,3 +1,4 @@
+import { title } from "process";
 import Section from "./Section";
 import { motion } from "framer-motion";
 
@@ -121,6 +122,52 @@ const services = [
     ),
   },
 ];
+const features = [
+  {
+    title: "CashFlow Planner",
+    description:
+      "AI planner with smart alerts for collections, shortfalls, and cash position.",
+    image: "/path-to-your-image/bill.png", // Update image paths
+  },
+  {
+    title: "Business Valuation",
+    description:
+      "Automated business valuation using DCF, market, and hybrid methods.",
+    image: "/path-to-your-image/reimburse.png",
+  },
+  {
+    title: "Sales Analysis",
+    description:
+      "Complete sales insights by branch and product, with key performance benchmarks.",
+    image: "/path-to-your-image/checking.png",
+  },
+  {
+    title: "Financial Modeling",
+    description:
+      "Forecast builder with integrated P&L, cash flow, and balance sheet tools.",
+    image: "/path-to-your-image/card.png",
+  },
+  {
+    title: "Financial Safety",
+    description: `Instant financial health check using Piotroski’s F-Score.`,
+    image: "/path-to-your-image/loan.png",
+  },
+  {
+    title: "Fraud Detection",
+    description: `AI tool for detecting fraud and unusual patterns`,
+    image: "/path-to-your-image/loan.png",
+  },
+  {
+    title: "Virtual CFO service",
+    description: "Let experts handle your financial planning and strategy.",
+    image: "/path-to-your-image/loan.png",
+  },
+  {
+    title: "Financial Metrics",
+    description: `Business scoring engine based on industry benchmarks`,
+    image: "/path-to-your-image/loan.png",
+  },
+];
 
 export default function Services() {
   return (
@@ -133,7 +180,7 @@ export default function Services() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          Comprehensive Financial Services
+          Explore yesbee4.ai
         </motion.h2>
         <motion.p
           className="mt-6 text-lg leading-8 text-accent-dark mx-auto max-w-3xl"
@@ -142,12 +189,11 @@ export default function Services() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          We offer a full range of financial services to help you achieve your
-          goals. Our expert team provides personalized solutions tailored to
-          your unique needs.
+          Each product is designed to remove complexity, reduce dependency and
+          bring AI-powered independence to your business operations.
         </motion.p>
       </div>
-      <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {/* <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service, index) => (
           <div
             key={index}
@@ -173,6 +219,31 @@ export default function Services() {
                 />
               </svg>
             </div>
+          </div>
+        ))}
+      </div> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-20 sm:mt-24 md:mt-14">
+        {features.map((item, index) => (
+          <div
+            key={index}
+            className=" group bg-background-light rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4 flex flex-col cursor-pointer hover:bg-primary-dark"
+          >
+            <div className="overflow-hidden rounded-lg mb-4">
+              <img
+                src={
+                  "/dashboard.png" ||
+                  "https://cdn.prod.website-files.com/5f16d69f1760cdba99c3ce6e/66b0939b0243e4472cba6d13_6685511dab1b588b072c07da_img-04.webp"
+                }
+                alt={item.title}
+                className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <h3 className="text-primary text-lg font-semibold mb-2 text-center group-hover:text-white transition-colors duration-300">
+              {item.title}
+            </h3>
+            <p className="text-accent-dark text-body-sm text-center group-hover:text-white transition-colors duration-300">
+              {item.description}
+            </p>
           </div>
         ))}
       </div>
