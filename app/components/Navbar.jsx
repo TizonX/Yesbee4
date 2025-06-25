@@ -1,29 +1,32 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import Container from './Container';
-import { useAuth } from '../context/AuthContext';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import Container from "./Container";
+import { useAuth } from "../context/AuthContext";
 
 const products = [
-  { name: 'Investment Planning', href: '/products/investment-planning' },
-  { name: 'Retirement Solutions', href: '/products/retirement-solutions' },
-  { name: 'Wealth Management', href: '/products/wealth-management' },
-  { name: 'Tax Strategies', href: '/products/tax-strategies' },
+  { name: "Cash Flow Planner", href: "/product/cash-flow-planner" },
+  { name: "Business Valuation", href: "/product/business-valuation" },
+  { name: "Financial Modeling", href: "/product/financial-modeling" },
+  { name: "Financial Safety", href: "/product/financial-safety" },
+  { name: "Fraud Detection", href: "/product/fraud-detection" },
+  { name: "virtual-cfo-service", href: "/product/virtual-cfo-service" },
+  { name: "Financial Metrics", href: "/product/financial-metrics" },
 ];
 
 const solutions = [
-  { name: 'For Individuals', href: '/solutions/individuals' },
-  { name: 'For Businesses', href: '/solutions/businesses' },
-  { name: 'For Institutions', href: '/solutions/institutions' },
-  { name: 'For Family Offices', href: '/solutions/family-offices' },
+  { name: "For Individuals", href: "/solutions/individuals" },
+  { name: "For Businesses", href: "/solutions/businesses" },
+  { name: "For Institutions", href: "/solutions/institutions" },
+  { name: "For Family Offices", href: "/solutions/family-offices" },
 ];
 
 const userMenuItems = [
-  { name: 'Profile', href: '/profile' },
-  { name: 'Settings', href: '/settings' },
-  { name: 'Billing', href: '/billing' },
+  { name: "Profile", href: "/profile" },
+  { name: "Settings", href: "/settings" },
+  { name: "Billing", href: "/billing" },
 ];
 
 export default function Navbar() {
@@ -38,29 +41,29 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isMobileMenuOpen && !event.target.closest('nav')) {
+      if (isMobileMenuOpen && !event.target.closest("nav")) {
         setIsMobileMenuOpen(false);
         setMobileProductsOpen(false);
         setMobileSolutionsOpen(false);
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, [isMobileMenuOpen]);
 
   const toggleMobileDropdown = (dropdown) => {
-    if (dropdown === 'products') {
+    if (dropdown === "products") {
       setMobileProductsOpen(!mobileProductsOpen);
       setMobileSolutionsOpen(false);
-    } else if (dropdown === 'solutions') {
+    } else if (dropdown === "solutions") {
       setMobileSolutionsOpen(!mobileSolutionsOpen);
       setMobileProductsOpen(false);
     }
@@ -69,7 +72,7 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+        isScrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
       <Container>
@@ -253,7 +256,7 @@ export default function Navbar() {
           >
             <span className="sr-only">Open main menu</span>
             <svg
-              className={`${isMobileMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
+              className={`${isMobileMenuOpen ? "hidden" : "block"} h-6 w-6`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -266,7 +269,7 @@ export default function Navbar() {
               />
             </svg>
             <svg
-              className={`${isMobileMenuOpen ? 'block' : 'hidden'} h-6 w-6`}
+              className={`${isMobileMenuOpen ? "block" : "hidden"} h-6 w-6`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -284,7 +287,7 @@ export default function Navbar() {
         {/* Mobile menu */}
         <div
           className={`${
-            isMobileMenuOpen ? 'block' : 'hidden'
+            isMobileMenuOpen ? "block" : "hidden"
           } lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg`}
         >
           <div className="px-2 pt-2 pb-3 space-y-1">
@@ -299,13 +302,13 @@ export default function Navbar() {
             {/* Mobile Products Dropdown */}
             <div className="space-y-1">
               <button
-                onClick={() => toggleMobileDropdown('products')}
+                onClick={() => toggleMobileDropdown("products")}
                 className="w-full flex items-center justify-between px-3 py-2 text-base font-medium text-primary hover:text-primary-dark hover:bg-gray-50 rounded-md"
               >
                 Products
                 <svg
                   className={`w-4 h-4 transition-transform ${
-                    mobileProductsOpen ? 'rotate-180' : ''
+                    mobileProductsOpen ? "rotate-180" : ""
                   }`}
                   fill="none"
                   viewBox="0 0 24 24"
@@ -319,7 +322,9 @@ export default function Navbar() {
                   />
                 </svg>
               </button>
-              <div className={`${mobileProductsOpen ? 'block' : 'hidden'} pl-4`}>
+              <div
+                className={`${mobileProductsOpen ? "block" : "hidden"} pl-4`}
+              >
                 {products.map((item) => (
                   <Link
                     key={item.name}
@@ -339,13 +344,13 @@ export default function Navbar() {
             {/* Mobile Solutions Dropdown */}
             <div className="space-y-1">
               <button
-                onClick={() => toggleMobileDropdown('solutions')}
+                onClick={() => toggleMobileDropdown("solutions")}
                 className="w-full flex items-center justify-between px-3 py-2 text-base font-medium text-primary hover:text-primary-dark hover:bg-gray-50 rounded-md"
               >
                 Solutions
                 <svg
                   className={`w-4 h-4 transition-transform ${
-                    mobileSolutionsOpen ? 'rotate-180' : ''
+                    mobileSolutionsOpen ? "rotate-180" : ""
                   }`}
                   fill="none"
                   viewBox="0 0 24 24"
@@ -359,7 +364,9 @@ export default function Navbar() {
                   />
                 </svg>
               </button>
-              <div className={`${mobileSolutionsOpen ? 'block' : 'hidden'} pl-4`}>
+              <div
+                className={`${mobileSolutionsOpen ? "block" : "hidden"} pl-4`}
+              >
                 {solutions.map((item) => (
                   <Link
                     key={item.name}
@@ -467,4 +474,4 @@ export default function Navbar() {
       </Container>
     </nav>
   );
-} 
+}

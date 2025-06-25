@@ -3,7 +3,7 @@ import Container from "./Container";
 import { motion } from "framer-motion";
 export default function Hero() {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-primary/5 to-transparent h-auto lg:h-screen">
+    <div className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-primary/5 to-transparent h-auto">
       <Container className="relative pt-20 pb-32 md:pt-24 md:pb-32 lg:pt-40 lg:pb-40">
         <div className="flex justify-center items-center text-center">
           <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 px-4 py-2 rounded-full text-xs sm:text-sm text-gray-700 w-fit">
