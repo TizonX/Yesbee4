@@ -9,7 +9,6 @@ import Pricing from "./components/Pricing";
 import FAQ from "./components/FAQ";
 import CTASection from "./components/CTASection";
 import Products from "./components/Products";
-import ProductComponent from "./components/ProductComponent";
 import Banner from "./components/Banner";
 
 export default function Home() {
