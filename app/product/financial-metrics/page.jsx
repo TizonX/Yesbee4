@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Container from "../../components/Container";
 import Input from "../../components/ui/Input";
 import {
@@ -7,220 +7,364 @@ import {
   ArrowsPointingOutIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import * as XLSX from "xlsx";
 
-const PRODUCT_TITLE = "Cashflow Planner";
+const PRODUCT_TITLE = "Financial Metrics";
 const PRODUCT_DESC =
-  "AI planner with smart alerts for collections, shortfalls, and cash position. Stay alert. Stay ahead.";
-
-const UPLOAD_STEPS = [
-  "Connecting to Power BI service...",
-  "Uploading CSV data...",
-  "Creating dataset...",
-  "Generating visualizations...",
-  "Publishing report...",
-  "Generating embed URL...",
+  "Business scoring engine based on industry benchmarks. Upload your financial data to get instant metrics and insights.";
+const SAMPLE_XLSX = [
+  ["Date", "Metric", "Value"],
+  ["2024-01-01", "Revenue", 10000],
+  ["2024-01-01", "Expenses", 7000],
+  ["2024-01-01", "Profit", 3000],
+  ["2024-02-01", "Revenue", 12000],
+  ["2024-02-01", "Expenses", 8000],
+  ["2024-02-01", "Profit", 4000],
 ];
 
-function mockApiCall(file) {
-  return new Promise((resolve) => {
-    let step = 0;
-    const interval = setInterval(() => {
-      step++;
-      if (step === UPLOAD_STEPS.length) {
-        clearInterval(interval);
-        // Simulate backend response
-        const mockReportId = Math.random().toString(36).substr(2, 9);
-        const mockEmbedUrl = `https://app.powerbi.com/reportEmbed?reportId=${mockReportId}&groupId=mock-workspace&config=mock-config`;
-        resolve({
-          embedUrl: mockEmbedUrl,
-          reportId: mockReportId,
-        });
-      }
-    }, 900);
-  });
+function downloadSampleFile() {
+  const ws = XLSX.utils.aoa_to_sheet(SAMPLE_XLSX);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+  XLSX.writeFile(wb, "sample-financial-metrics.xlsx");
 }
 
-export default function CashFlowPlannerPage() {
-  const [stepIndex, setStepIndex] = useState(0);
-  const [uploading, setUploading] = useState(false);
-  const [embedData, setEmbedData] = useState(null);
+function parseXLSX(file, cb) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: "array" });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    cb(json);
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function TablePreview({ data }) {
+  if (!data || !data.length) return null;
+  return (
+    <div className="overflow-x-auto rounded-lg border border-primary/10 bg-background-light shadow-sm">
+      <table className="min-w-full text-xs md:text-sm">
+        <thead>
+          <tr>
+            {data[0].map((cell, idx) => (
+              <th
+                key={idx}
+                className="px-4 py-3 bg-primary text-white font-semibold text-left border-b border-primary/20"
+              >
+                {cell}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.slice(1).map((row, i) => (
+            <tr
+              key={i}
+              className={
+                "transition-colors even:bg-white odd:bg-background-light hover:bg-primary/5"
+              }
+            >
+              {row.map((cell, j) => (
+                <td
+                  key={j}
+                  className="px-4 py-2 text-accent-dark border-t border-primary/10 whitespace-nowrap"
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default function FinancialMetricsPage() {
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("");
+  const [filePreview, setFilePreview] = useState([]);
+  const [status, setStatus] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
-  const intervalRef = useRef(null);
+  const [showSamplePreview, setShowSamplePreview] = useState(false);
+  const fileInputRef = useRef();
+  const dropRef = useRef();
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  // Prevent background scroll when fullscreen
+  useEffect(() => {
+    if (fullscreen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [fullscreen]);
 
-  const handleUpload = async (e) => {
+  // Drag and drop handlers
+  const handleDragOver = (e) => {
     e.preventDefault();
-    if (!file) return;
-    setUploading(true);
-    setStepIndex(0);
-    intervalRef.current = setInterval(() => {
-      setStepIndex((prev) => {
-        if (prev < UPLOAD_STEPS.length - 1) {
-          return prev + 1;
-        } else {
-          clearInterval(intervalRef.current);
-          return prev;
-        }
-      });
-    }, 900);
-    const data = await mockApiCall(file);
-    setEmbedData(data);
-    setUploading(false);
+    dropRef.current.classList.add("ring-2", "ring-primary");
   };
-
-  const handleReset = () => {
-    setEmbedData(null);
-    setFile(null);
-    setStepIndex(0);
-    setUploading(false);
-    setFullscreen(false);
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    dropRef.current.classList.remove("ring-2", "ring-primary");
   };
-
-  const handleDownload = () => {
-    alert("Download Report (mocked)");
-  };
-  const handleOpenInPowerBI = () => {
-    if (embedData?.embedUrl) {
-      window.open(embedData.embedUrl, "_blank");
+  const handleDrop = (e) => {
+    e.preventDefault();
+    dropRef.current.classList.remove("ring-2", "ring-primary");
+    const droppedFile = e.dataTransfer.files[0];
+    if (
+      droppedFile &&
+      (droppedFile.type ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        droppedFile.name.endsWith(".xlsx"))
+    ) {
+      setFile(droppedFile);
+      setFileName(droppedFile.name);
+      parseXLSX(droppedFile, setFilePreview);
     }
   };
-  const handleFullscreen = () => {
-    setFullscreen(true);
+
+  // File input handler
+  const handleFileChange = (e) => {
+    const selected = e.target.files[0];
+    if (
+      selected &&
+      (selected.type ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        selected.name.endsWith(".xlsx"))
+    ) {
+      setFile(selected);
+      setFileName(selected.name);
+      parseXLSX(selected, setFilePreview);
+    }
   };
-  const handleCloseFullscreen = () => {
+
+  // Upload to backend API endpoint
+  const handleUpload = async () => {
+    setStatus("Uploading...");
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      // API endpoint as provided by user
+      const res = await fetch("/subscriptions/cashflow/process-file", {
+        method: "POST",
+        body: formData,
+      });
+      setStatus("Processing...");
+      if (!res.ok) throw new Error("Upload failed");
+      const blob = await res.blob();
+      // Assume backend returns xlsx file
+      parseXLSX(
+        new File([blob], fileName, { type: blob.type }),
+        (data) => {
+          setFilePreview(data);
+          setStatus("");
+          setShowPreview(true);
+        }
+      );
+    } catch (err) {
+      setStatus("Error uploading file");
+    }
+  };
+
+  // Reset all
+  const handleReset = () => {
+    setFile(null);
+    setFileName("");
+    setFilePreview([]);
+    setStatus("");
+    setShowPreview(false);
     setFullscreen(false);
+  };
+
+  // Download uploaded file
+  const handleDownload = () => {
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
     <div className="bg-gradient-to-br from-primary/5 via-background-light to-secondary/5 min-h-[80vh] py-24">
       <Container>
-        <div className="flex flex-col md:flex-row gap-16 items-center md:items-start">
-          {/* Left: Product Info */}
-          <div className="flex-1 space-y-8 md:pt-10">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary drop-shadow-sm">
+        <div className="flex flex-col lg:flex-row gap-10 items-stretch">
+          {/* Left: Title & Description */}
+          <div className="flex-1 flex flex-col justify-center mb-8 lg:mb-0">
+            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
               {PRODUCT_TITLE}
             </h1>
-            <p className="text-lg md:text-xl text-accent-dark max-w-xl">
+            <p className="text-accent-dark text-lg mb-6">
               {PRODUCT_DESC}
             </p>
+            <button
+              className="btn-secondary w-fit mb-4"
+              onClick={() => {
+                setShowSamplePreview((v) => !v);
+              }}
+            >
+              {showSamplePreview ? "Hide Sample File Preview" : "Download Sample File"}
+            </button>
+            {/* Sample Preview Card with animation and improved style */}
+            <div
+              className={`transition-all duration-300 ${
+                showSamplePreview
+                  ? "opacity-100 scale-100 max-h-[600px] mt-2"
+                  : "opacity-0 scale-95 max-h-0 overflow-hidden"
+              }`}
+            >
+              <div className="bg-white rounded-xl shadow-lg border border-primary/20 overflow-x-auto max-w-full">
+                <div className="flex items-center justify-between px-6 py-3 bg-primary rounded-t-xl">
+                  <span className="font-semibold text-white text-base tracking-wide">
+                    Sample Excel Preview
+                  </span>
+                  <button
+                    className="text-xs text-white underline hover:text-secondary"
+                    onClick={downloadSampleFile}
+                  >
+                    Download
+                  </button>
+                </div>
+                <div className="p-4">
+                  <TablePreview data={SAMPLE_XLSX} />
+                </div>
+              </div>
+            </div>
           </div>
-          {/* Right: File Upload or Report */}
-          <div className="flex-1 w-full max-w-lg">
-            {!embedData ? (
-              <form onSubmit={handleUpload} className="space-y-8">
-                <label
-                  htmlFor="file-upload"
-                  className={`flex flex-col items-center justify-center border-2 border-dashed border-primary/40 rounded-2xl bg-white/80 hover:bg-primary/10 transition-colors duration-200 py-16 px-6 text-center shadow-none focus-within:ring-2 focus-within:ring-primary outline-none relative group
-                    ${uploading ? "opacity-60 pointer-events-none" : ""}
-                    cursor-pointer
-                  `}
+
+          {/* Right: Upload/Preview */}
+          <div className="flex-1 flex flex-col items-center justify-center">
+            {/* Upload Section */}
+            {!showPreview && (
+              <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 flex flex-col items-center border border-primary/10">
+                <div
+                  ref={dropRef}
+                  className="w-full h-32 flex flex-col items-center justify-center border-2 border-dashed border-primary/30 rounded-lg cursor-pointer transition-all mb-4 bg-background-light hover:bg-primary/5"
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  onClick={() => fileInputRef.current?.click()}
                 >
-                  <CloudArrowUpIcon
-                    className={`w-16 h-16 mb-4 group-hover:scale-110 transition-transform text-primary`}
-                  />
-                  <span className={`text-lg font-semibold ${file && !uploading ? "text-primary" : "text-primary/40"}`}>
-                    Drag & drop your CSV file here
-                  </span>
-                  <span className="text-accent-dark text-sm mt-2">
-                    or click to browse
-                  </span>
-                  <input
-                    id="file-upload"
-                    type="file"
-                    accept=".csv"
-                    onChange={handleFileChange}
-                    disabled={uploading}
-                    className="hidden"
-                    required
-                  />
-                  {file && (
-                    <span className="mt-4 text-primary font-medium text-sm truncate max-w-xs">
-                      {file.name}
-                    </span>
-                  )}
-                </label>
+                  <svg className="w-10 h-10 text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4a1 1 0 011-1h8a1 1 0 011 1v12m-4 4h-4a1 1 0 01-1-1v-4h6v4a1 1 0 01-1 1z" />
+                  </svg>
+                  <span className="text-accent-dark text-sm">Drag & drop your Excel file here, or click to select</span>
+                  {fileName && <span className="mt-2 text-primary text-xs">{fileName}</span>}
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".xlsx"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
                 <button
-                  type="submit"
-                  className={`btn btn-primary w-full text-lg transition-all
-                    ${!file ? "cursor-not-allowed opacity-60" : "cursor-pointer opacity-100"}
-                  `}
-                  disabled={!file}
+                  className="btn-primary w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={!file || !!status}
+                  onClick={handleUpload}
                 >
-                  {uploading ? "Uploading..." : "Upload & Analyze"}
+                  Upload Excel
                 </button>
-                {uploading && (
-                  <div className="mt-8 space-y-3">
-                    {UPLOAD_STEPS.slice(0, stepIndex + 1).map((msg, idx) => (
-                      <div
-                        key={idx}
-                        className="text-base text-primary flex items-center gap-3 animate-fade-in"
-                      >
-                        <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse" />
-                        {msg}
-                      </div>
-                    ))}
-                  </div>
+                {status && (
+                  <div className="mt-4 text-primary text-sm font-medium animate-pulse">{status}</div>
                 )}
-              </form>
-            ) : (
-              <div className="flex flex-col items-center space-y-8">
-                {/* Fullscreen overlay */}
+              </div>
+            )}
+
+            {/* Preview Section */}
+            {showPreview && (
+              <>
+                {/* Fullscreen Overlay */}
                 {fullscreen && (
-                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-                    <div className="relative w-full h-full flex items-center justify-center">
-                      <iframe
-                        src={embedData.embedUrl}
-                        title="Power BI Report Fullscreen"
-                        className="w-[90vw] h-[90vh] rounded-xl border-2 border-primary/20 shadow-2xl bg-white"
-                        allowFullScreen
-                      />
+                  <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md transition-all duration-300"
+                    style={{ animation: "fadeIn .3s" }}
+                  >
+                    <div className="relative bg-white rounded-2xl shadow-2xl p-8 max-w-3xl w-full mx-4 animate-fade-in">
                       <button
-                        className="absolute top-6 right-8 z-10 p-2 bg-white/80 rounded-full hover:bg-primary/10 text-primary shadow-lg"
-                        onClick={handleCloseFullscreen}
+                        className="absolute top-4 right-4 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-primary-dark transition-colors"
+                        onClick={() => setFullscreen(false)}
                         aria-label="Close Fullscreen"
                       >
-                        <XMarkIcon className="w-8 h-8" />
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                       </button>
+                      <div className="mb-4 flex justify-between items-center">
+                        <span className="font-semibold text-primary text-lg">Uploaded File Preview</span>
+                        <div className="flex gap-2">
+                          <button
+                            className="btn-secondary px-3 py-1 text-xs"
+                            onClick={() => setFullscreen((v) => !v)}
+                          >
+                            Small Screen
+                          </button>
+                          <button
+                            className="btn-primary px-3 py-1 text-xs"
+                            onClick={handleDownload}
+                          >
+                            Download
+                          </button>
+                          <button
+                            className="btn px-3 py-1 text-xs border border-primary text-primary bg-white hover:bg-primary hover:text-white"
+                            onClick={handleReset}
+                          >
+                            Upload New File
+                          </button>
+                        </div>
+                      </div>
+                      <div className="max-h-[70vh] overflow-auto rounded-lg border border-primary/10 bg-background-light p-2">
+                        <TablePreview data={filePreview} />
+                      </div>
                     </div>
                   </div>
                 )}
-                <div className="relative w-full">
-                  <iframe
-                    src={embedData.embedUrl}
-                    title="Power BI Report"
-                    className="w-full h-80 rounded-xl border-2 border-primary/20 shadow-md bg-white"
-                    allowFullScreen
-                  />
-                  <button
-                    className="absolute top-3 right-3 p-2 bg-white/80 rounded-full hover:bg-primary/10 text-primary shadow-md"
-                    onClick={handleFullscreen}
-                    aria-label="View Fullscreen"
-                  >
-                    <ArrowsPointingOutIcon className="w-7 h-7" />
-                  </button>
+                {/* Normal Preview Card */}
+                <div
+                  className={`w-full max-w-2xl bg-white rounded-xl shadow-lg p-6 border border-primary/10 transition-all duration-300 ${
+                    fullscreen ? "opacity-0 pointer-events-none scale-95" : "opacity-100 scale-100"
+                  }`}
+                >
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="font-semibold text-primary">Uploaded File Preview</span>
+                    <div className="flex gap-2">
+                      <button
+                        className="btn-secondary px-3 py-1 text-xs"
+                        onClick={() => setFullscreen((v) => !v)}
+                      >
+                        Full Screen
+                      </button>
+                      <button
+                        className="btn-primary px-3 py-1 text-xs"
+                        onClick={handleDownload}
+                      >
+                        Download
+                      </button>
+                      <button
+                        className="btn px-3 py-1 text-xs border border-primary text-primary bg-white hover:bg-primary hover:text-white"
+                        onClick={handleReset}
+                      >
+                        Upload New File
+                      </button>
+                    </div>
+                  </div>
+                  <div className="max-h-[60vh] overflow-auto bg-background-light rounded-lg p-2 border border-primary/5">
+                    <TablePreview data={filePreview} />
+                  </div>
                 </div>
-                <div className="flex flex-col gap-4 w-full">
-                  <button
-                    className="btn btn-primary w-full text-lg"
-                    onClick={handleDownload}
-                  >
-                    Download Report
-                  </button>
-                  <button
-                    className="btn btn-secondary w-full text-lg"
-                    onClick={handleOpenInPowerBI}
-                  >
-                    Open in Power BI
-                  </button>
-                  <button className="btn w-full text-lg" onClick={handleReset}>
-                    Upload New File
-                  </button>
-                </div>
-              </div>
+              </>
             )}
           </div>
         </div>
