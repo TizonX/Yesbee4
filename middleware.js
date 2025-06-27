@@ -16,7 +16,7 @@ export function middleware(req) {
   const isPublic = publicPaths.some((path) => pathname.startsWith(path));
 
   // Define protected paths (auth required)
-  const protectedPaths = ["/orders", "/checkout"];
+  const protectedPaths = ["/orders"]; // checkout
   const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
 
   // If user is NOT logged in and trying to access protected route, redirect to login
