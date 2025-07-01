@@ -399,7 +399,9 @@ export default function CashFlowPlannerPage() {
                 // }}
                 onClick={handleSampleDownload}
               >
-                {showSamplePreview ? "Hide Sample File" : "Show Sample File"}
+                {showSamplePreview
+                  ? "Hide Sample File"
+                  : "Download Sample File"}
               </button>
               {showSamplePreview && (
                 <button

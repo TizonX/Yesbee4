@@ -57,7 +57,7 @@ export default function ProfilePage() {
 
       await apiRequest({
         method: "PUT",
-        url: "/users/profile",
+        url: "/users/me/update",
         data: requestData,
         headers,
         showSuccessToast: true,
