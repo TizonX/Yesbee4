@@ -11,11 +11,10 @@ import Input from "@/app/components/ui/Input";
 import { usePathGuard } from "@/utils/hooks/usePathGuard";
 
 export default function SignupPage() {
-    const { user, isLoading: isLoadingGuard } = usePathGuard();
+  const { user, isLoading: isLoadingGuard } = usePathGuard();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { signup } = useAuth();
-
 
   const {
     register,

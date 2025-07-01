@@ -389,14 +389,15 @@ export default function CashFlowPlannerPage() {
             <div className="flex flex-col sm:flex-row gap-3 mb-4 w-full sm:w-fit">
               <button
                 className="btn-secondary w-full sm:w-fit"
-                onClick={() => {
-                  setShowSamplePreview((v) => !v);
-                  if (!showSamplePreview) {
-                    resetUploadUI();
-                  } else {
-                    resetUploadUI();
-                  }
-                }}
+                // onClick={() => {
+                //   setShowSamplePreview((v) => !v);
+                //   if (!showSamplePreview) {
+                //     resetUploadUI();
+                //   } else {
+                //     resetUploadUI();
+                //   }
+                // }}
+                onClick={handleSampleDownload}
               >
                 {showSamplePreview ? "Hide Sample File" : "Show Sample File"}
               </button>
@@ -417,13 +418,27 @@ export default function CashFlowPlannerPage() {
                   <div className="flex items-center justify-between px-8 py-6 bg-gradient-to-r from-primary to-primary-dark">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        <svg
+                          className="w-6 h-6 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-white text-xl font-semibold">Sample File Preview</h3>
-                        <p className="text-white/80 text-sm">Example cash flow data format</p>
+                        <h3 className="text-white text-xl font-semibold">
+                          Sample File Preview
+                        </h3>
+                        <p className="text-white/80 text-sm">
+                          Example cash flow data format
+                        </p>
                       </div>
                     </div>
                     <button
@@ -439,8 +454,12 @@ export default function CashFlowPlannerPage() {
                   <div className="flex-1 overflow-hidden">
                     <div className="p-6 h-full overflow-auto">
                       <div className="mb-4">
-                        <h4 className="text-lg font-semibold text-gray-800 mb-2">Sample Data Structure</h4>
-                        <p className="text-gray-600 text-sm">This is the expected format for your cash flow data:</p>
+                        <h4 className="text-lg font-semibold text-gray-800 mb-2">
+                          Sample Data Structure
+                        </h4>
+                        <p className="text-gray-600 text-sm">
+                          This is the expected format for your cash flow data:
+                        </p>
                       </div>
                       <div className="bg-gray-50 p-4 border border-gray-200">
                         <TablePreview data={sampleTable} />
@@ -456,8 +475,18 @@ export default function CashFlowPlannerPage() {
                           className="btn-primary px-6 py-3 flex items-center space-x-2"
                           onClick={handleSampleDownload}
                         >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            />
                           </svg>
                           <span>Download Sample File</span>
                         </button>
@@ -484,33 +513,64 @@ export default function CashFlowPlannerPage() {
                 className="w-full max-w-md min-w-[320px] min-h-[320px] flex flex-col justify-center items-center"
               >
                 {/* Show processed file button if data exists */}
-                {processedFile && processedFileData && processedFileData.length > 0 && (
-                  <div className="w-full mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                          <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                {processedFile &&
+                  processedFileData &&
+                  processedFileData.length > 0 && (
+                    <div className="w-full mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                            <svg
+                              className="w-4 h-4 text-green-600"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-green-800">
+                              File Processed Successfully
+                            </p>
+                            <p className="text-xs text-green-600">
+                              {processedFileName}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          className="btn-primary px-4 py-2 text-sm flex items-center space-x-2"
+                          onClick={() => setShowPreview(true)}
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            />
                           </svg>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-green-800">File Processed Successfully</p>
-                          <p className="text-xs text-green-600">{processedFileName}</p>
-                        </div>
+                          <span>View Results</span>
+                        </button>
                       </div>
-                      <button
-                        className="btn-primary px-4 py-2 text-sm flex items-center space-x-2"
-                        onClick={() => setShowPreview(true)}
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                        <span>View Results</span>
-                      </button>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 <div
                   ref={dropRef}
@@ -685,13 +745,27 @@ export default function CashFlowPlannerPage() {
                   <div className="flex items-center justify-between px-8 py-6 bg-gradient-to-r from-primary to-primary-dark">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        <svg
+                          className="w-6 h-6 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-white text-xl font-semibold">Processed File Preview</h3>
-                        <p className="text-white/80 text-sm">Your cash flow analysis is ready</p>
+                        <h3 className="text-white text-xl font-semibold">
+                          Processed File Preview
+                        </h3>
+                        <p className="text-white/80 text-sm">
+                          Your cash flow analysis is ready
+                        </p>
                       </div>
                     </div>
                     <button
@@ -708,8 +782,12 @@ export default function CashFlowPlannerPage() {
                     {processedFileData && processedFileData.length > 0 ? (
                       <div className="p-6 h-full overflow-auto">
                         <div className="mb-4">
-                          <h4 className="text-lg font-semibold text-gray-800 mb-2">Analysis Results</h4>
-                          <p className="text-gray-600 text-sm">Below is a preview of your processed cash flow data:</p>
+                          <h4 className="text-lg font-semibold text-gray-800 mb-2">
+                            Analysis Results
+                          </h4>
+                          <p className="text-gray-600 text-sm">
+                            Below is a preview of your processed cash flow data:
+                          </p>
                         </div>
                         <div className="bg-gray-50 p-4 border border-gray-200">
                           <TablePreview data={processedFileData} />
@@ -718,16 +796,30 @@ export default function CashFlowPlannerPage() {
                     ) : (
                       <div className="p-8 text-center">
                         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          <svg
+                            className="w-8 h-8 text-green-600"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
                           </svg>
                         </div>
-                        <h4 className="text-xl font-semibold text-gray-800 mb-2">File Processed Successfully</h4>
+                        <h4 className="text-xl font-semibold text-gray-800 mb-2">
+                          File Processed Successfully
+                        </h4>
                         <p className="text-gray-600 mb-4">
-                          Your file has been processed and is ready for download.
+                          Your file has been processed and is ready for
+                          download.
                         </p>
                         <p className="text-gray-500 text-sm">
-                          Click the download button below to get your processed file
+                          Click the download button below to get your processed
+                          file
                         </p>
                       </div>
                     )}
@@ -742,8 +834,18 @@ export default function CashFlowPlannerPage() {
                             className="btn-primary px-6 py-3 flex items-center space-x-2"
                             onClick={handleDownloadProcessed}
                           >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                              />
                             </svg>
                             <span>Download Processed File</span>
                           </button>
@@ -752,8 +854,18 @@ export default function CashFlowPlannerPage() {
                           className="btn-secondary px-6 py-3 flex items-center space-x-2"
                           onClick={handleReset}
                         >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                            />
                           </svg>
                           <span>Upload New File</span>
                         </button>

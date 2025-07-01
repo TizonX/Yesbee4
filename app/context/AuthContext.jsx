@@ -57,7 +57,7 @@ export function AuthProvider({ children }) {
     const data = await apiRequest({
       method: "POST",
       url: "/users/register",
-      data: { name, email, phone, password },
+      data: { fullname: name, email, phone, password },
       showSuccessToast: true,
       successMessage: "Account created successfully!",
     });
