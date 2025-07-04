@@ -149,7 +149,7 @@ const features = [
   },
   {
     title: "Financial Safety",
-    description: `Instant financial health check using Piotroski’s F-Score.`,
+    description: `Instant financial health check using Piotroski's F-Score.`,
     image: "/path-to-your-image/loan.png",
   },
   {
@@ -226,7 +226,7 @@ export default function Services() {
         {features.map((item, index) => (
           <div
             key={index}
-            className=" group bg-background-light rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4 flex flex-col cursor-pointer hover:bg-primary-dark"
+            className=" group bg-background-light rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4 flex flex-col cursor-pointer"
           >
             <div className="overflow-hidden rounded-lg mb-4">
               <img
@@ -235,13 +235,13 @@ export default function Services() {
                   "https://cdn.prod.website-files.com/5f16d69f1760cdba99c3ce6e/66b0939b0243e4472cba6d13_6685511dab1b588b072c07da_img-04.webp"
                 }
                 alt={item.title}
-                className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
               />
             </div>
-            <h3 className="text-primary text-lg font-semibold mb-2 text-center group-hover:text-white transition-colors duration-300">
+            <h3 className="text-primary text-lg font-semibold mb-2 text-center  transition-colors duration-300">
               {item.title}
             </h3>
-            <p className="text-accent-dark text-body-sm text-center group-hover:text-white transition-colors duration-300">
+            <p className="text-accent-dark text-body-sm text-center  transition-colors duration-300">
               {item.description}
             </p>
           </div>
