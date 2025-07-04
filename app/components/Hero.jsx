@@ -15,7 +15,7 @@ export default function Hero() {
             >
               <path d="M12 1.75L3 5.5v6c0 5.25 3.75 10.25 9 11 5.25-.75 9-5.75 9-11v-6l-9-3.75zM12 12c-.828 0-1.5-.672-1.5-1.5S11.172 9 12 9s1.5.672 1.5 1.5S12.828 12 12 12zm1.25 5h-2.5V15h2.5v2z" />
             </svg>
-            <span>AI-powered Business Intelligence. In seconds.</span>
+            <span>Privacy notice: We do not keep any of your data.</span>
           </div>
         </div>
 
@@ -26,11 +26,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            AI Powered Business{" "}
+            AI Powered Business Backbone{" "}
             <span className="relative whitespace-nowrap">
-              <span className="relative bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Backbone
-              </span>
+              <span className="relative bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"></span>
             </span>
           </motion.h1>
 
