@@ -42,19 +42,19 @@ const Products = ({
           </div>
           {/* Text Section */}
           <div className="flex-1 flex flex-col justify-center items-start w-auto max-w-xl mx-auto lg:mx-0 space-y-7">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight mt-10 lg:mt-0">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary tracking-tight mt-10 lg:mt-0">
               {title}
             </h2>
             {/* Italic Text */}
             {italicText && (
-              <p className="italic text-accent-dark text-sm">{italicText}</p>
+              <p className="italic text-accent-dark text-base">{italicText}</p>
             )}
             <p className="text-accent-dark text-base leading-relaxed">{desc}</p>
-            <ul className="space-y-4 mt-2">
+            <ul className="space-y-1">
               {bulletPoints?.map((point, idx) => (
                 <li
                   key={idx}
-                  className="flex items-center text-sm gap-3 text-accent-dark"
+                  className="flex items-center text-sm gap-1 text-accent-dark"
                 >
                   <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-primary/90 text-sm">
                     <svg
