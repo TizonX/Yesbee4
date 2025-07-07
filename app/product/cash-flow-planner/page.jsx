@@ -12,7 +12,7 @@ import { faChartSimple, faInbox } from "@fortawesome/free-solid-svg-icons";
 const PRODUCT_TITLE = "CashFlow Planner with Smart Alerts";
 const PRODUCT_DESC =
   "Is your business profitable but still struggling with cash flow? You’re not alone—80% of MSMEs face cash crunches due to delayed collections and lack of visibility.";
-const SAMPLE_CSV_URL = "/sample-cashflow.xlsx";
+const SAMPLE_CSV_URL = "/sample-cashflow.xlsm";
 
 // Add this helper function for reading CSV file preview
 function readCSVPreview(file, cb) {
