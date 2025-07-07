@@ -10,7 +10,8 @@ import * as XLSX from "xlsx";
 const PRODUCT_TITLE = "Cash-Flow Planner";
 const PRODUCT_DESC =
   "AI planner with smart alerts for collections, shortfalls, and cash position.";
-const SAMPLE_CSV_URL = "/sample-cashflow.xlsx";
+//const SAMPLE_CSV_URL = "/sample-cashflow.xlsx";
+const SAMPLE_CSV_URL = "/sample-cashflow.xlsm";
 
 // Add this helper function for reading CSV file preview
 function readCSVPreview(file, cb) {
@@ -351,7 +352,8 @@ export default function CashFlowPlannerPage() {
   const handleSampleDownload = () => {
     const a = document.createElement("a");
     a.href = SAMPLE_CSV_URL;
-    a.download = "sample-cashflow.xlsx";
+    //a.download = "sample-cashflow.xlsx";
+    a.download = "sample-cashflow.xlsm";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
