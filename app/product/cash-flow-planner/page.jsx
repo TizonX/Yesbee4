@@ -391,7 +391,7 @@ export default function CashFlowPlannerPage() {
             </h1>
             <p className="text-accent-dark text-base">{PRODUCT_DESC}</p>
             {/* icons */}
-            <div className="flex flex-wrap gap-md justify-start py-6">
+            <div className="flex flex-wrap gap-md justify-start py-10">
               {/* WhatsApp */}
               <div className="flex items-center gap-sm group cursor-pointer">
                 <div className="p-xs bg-success/10 rounded-full group-hover:bg-success/20 transition duration-DEFAULT shadow-sm">
