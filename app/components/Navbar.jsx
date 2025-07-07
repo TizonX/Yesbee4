@@ -81,8 +81,8 @@ export default function Navbar() {
           <Link href="/" className="flex-shrink-0">
             <div className="relative w-40 h-8">
               <Image
-                src="/logo.svg"
-                alt="FinanceHub Logo"
+                src="/yesbee4ai_logo.png"
+                alt="YesBee4.ai Logo"
                 fill
                 className="object-contain"
                 priority

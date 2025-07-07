@@ -5,7 +5,7 @@ import Section from "../../components/Section";
 import Container from "../../components/Container";
 import Input from "../../components/ui/Input";
 import { apiRequest } from "../../lib/api";
-import * as XLSX from "xlsx";
+import * as XLSX from "xlsm";
 
 const PRODUCT_TITLE = "Cash-Flow Planner";
 const PRODUCT_DESC =
@@ -351,7 +351,7 @@ export default function CashFlowPlannerPage() {
   const handleSampleDownload = () => {
     const a = document.createElement("a");
     a.href = SAMPLE_CSV_URL;
-    a.download = "sample-cashflow.xlsx";
+    a.download = "sample-cashflow.xlsm";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
