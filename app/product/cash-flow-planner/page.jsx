@@ -5,11 +5,13 @@ import Section from "../../components/Section";
 import Container from "../../components/Container";
 import Input from "../../components/ui/Input";
 import { apiRequest } from "../../lib/api";
-import * as XLSX from "xlsm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faChartSimple, faInbox } from "@fortawesome/free-solid-svg-icons";
 
-const PRODUCT_TITLE = "Cash-Flow Planner";
+const PRODUCT_TITLE = "CashFlow Planner with Smart Alerts";
 const PRODUCT_DESC =
-  "AI planner with smart alerts for collections, shortfalls, and cash position.";
+  "Is your business profitable but still struggling with cash flow? You’re not alone—80% of MSMEs face cash crunches due to delayed collections and lack of visibility.";
 const SAMPLE_CSV_URL = "/sample-cashflow.xlsx";
 
 // Add this helper function for reading CSV file preview
@@ -188,6 +190,7 @@ export default function CashFlowPlannerPage() {
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         droppedFile.type === "application/vnd.ms-excel" ||
         droppedFile.name.toLowerCase().endsWith(".xlsx") ||
+        droppedFile.name.toLowerCase().endsWith(".xlsm") ||
         droppedFile.name.toLowerCase().endsWith(".xls");
 
       if (isExcel) {
@@ -207,6 +210,7 @@ export default function CashFlowPlannerPage() {
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         selected.type === "application/vnd.ms-excel" ||
         selected.name.toLowerCase().endsWith(".xlsx") ||
+        selected.name.toLowerCase().endsWith(".xlsm") ||
         selected.name.toLowerCase().endsWith(".xls");
 
       if (isExcel) {
@@ -276,6 +280,7 @@ export default function CashFlowPlannerPage() {
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         blob.type === "application/vnd.ms-excel" ||
         processedFile.name.toLowerCase().endsWith(".xlsx") ||
+        processedFile.name.toLowerCase().endsWith(".xlsm") ||
         processedFile.name.toLowerCase().endsWith(".xls")
       ) {
         // Excel file
@@ -384,7 +389,49 @@ export default function CashFlowPlannerPage() {
             <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
               {PRODUCT_TITLE}
             </h1>
-            <p className="text-accent-dark text-lg mb-6">{PRODUCT_DESC}</p>
+            <p className="text-accent-dark text-base">{PRODUCT_DESC}</p>
+            {/* icons */}
+            <div className="flex flex-wrap gap-md justify-start py-6">
+              {/* WhatsApp */}
+              <div className="flex items-center gap-sm group cursor-pointer">
+                <div className="p-xs bg-success/10 rounded-full group-hover:bg-success/20 transition duration-DEFAULT shadow-sm">
+                  <FontAwesomeIcon
+                    icon={faWhatsapp}
+                    className="w-5 h-5 text-success group-hover:scale-110 group-hover:text-success transition-transform duration-DEFAULT flex items-center justify-center"
+                  />
+                </div>
+                <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
+                  WhatsApp Alerts
+                </span>
+              </div>
+
+              {/* Email */}
+              <div className="flex items-center gap-sm group cursor-pointer">
+                <div className="p-xs bg-secondary/10 rounded-full group-hover:bg-secondary/20 transition duration-DEFAULT shadow-sm">
+                  <FontAwesomeIcon
+                    icon={faInbox}
+                    className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform duration-DEFAULT flex items-center justify-center"
+                  />
+                </div>
+                <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
+                  Email Notifications
+                </span>
+              </div>
+
+              {/* Excel Dashboard */}
+              <div className="flex items-center gap-sm group cursor-pointer">
+                <div className="p-xs bg-accent-dark/10 rounded-full group-hover:bg-accent-dark/20 transition duration-DEFAULT shadow-sm">
+                  <FontAwesomeIcon
+                    icon={faChartSimple}
+                    className="w-5 h-5 text-accent-dark group-hover:scale-110 transition-transform duration-DEFAULT flex items-center justify-center"
+                  />
+                </div>
+                <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
+                  Excel Dashboard
+                </span>
+              </div>
+            </div>
+
             {/* Button group for sample preview toggle and download */}
             <div className="flex flex-col sm:flex-row gap-3 mb-4 w-full sm:w-fit">
               <button
@@ -411,6 +458,17 @@ export default function CashFlowPlannerPage() {
                   Download Sample File
                 </button>
               )}
+            </div>
+            {/* sample video */}
+            <div className="relative rounded-lg overflow-hidden shadow-md">
+              <video
+                src="/rain.mp4" // public folder me video dalna hai
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover opacity-25"
+              />
             </div>
             {/* Sample Preview Modal */}
             {showSamplePreview && (
@@ -507,7 +565,7 @@ export default function CashFlowPlannerPage() {
           </div>
 
           {/* Right: Upload/Preview */}
-          <div className="flex-1 flex flex-col items-center justify-center w-full min-w-[320px] min-h-[340px] transition-all duration-300">
+          <div className="flex-1 flex flex-col items-center justify-start w-full min-w-[320px] min-h-[340px] transition-all duration-300">
             {/* Upload Section */}
             {!showPreview && !showSamplePreview && (
               <div
@@ -616,7 +674,7 @@ export default function CashFlowPlannerPage() {
                   <span className="text-accent-dark text-base font-medium text-center select-none px-2">
                     Drag & drop your Excel file here
                     <br className="hidden sm:block" />
-                    <span className="text-xs text-accent">
+                    <span className="text-xs text-accent-dark">
                       or click to select
                     </span>
                   </span>
@@ -632,7 +690,7 @@ export default function CashFlowPlannerPage() {
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept=".xlsx,.xls"
+                  accept=".xlsx,.xlsm,.xls"
                   className="hidden"
                   onChange={handleFileChange}
                 />
@@ -722,16 +780,16 @@ export default function CashFlowPlannerPage() {
                     <div className="text-sm text-blue-800">
                       <p className="font-medium mb-1">File Requirements:</p>
                       <ul className="space-y-1 text-xs">
-                        <li>• Only Excel files (.xlsx, .xls) are supported</li>
+                        <li>• Only Excel files (.xlsm, .xlsx) are supported</li>
                         <li>
-                          • File should contain cash flow data with columns like
-                          Date, Description, Amount, Type
+                          • Watch the quick tutorial video to see exactly how to
+                          upload your data.
+                        </li>
+                        <li>
+                          • Ensure your file matches the sample format provided
+                          for a smooth import
                         </li>
                         <li>• Maximum file size: 10MB</li>
-                        <li>
-                          • Download the sample file above to see the expected
-                          format
-                        </li>
                       </ul>
                     </div>
                   </div>
