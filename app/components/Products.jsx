@@ -1,6 +1,8 @@
 import React from "react";
 import Section from "./Section";
 import Container from "./Container";
+import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FINANCE_IMAGE =
   "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
@@ -17,6 +19,7 @@ const Products = ({
   desc = "",
   bulletPoints = [],
   italicText = "",
+  icon = faShieldHalved,
 }) => {
   return (
     <div className="bg-background-dark">
@@ -29,13 +32,14 @@ const Products = ({
           {/* Image Section */}
           <div className="flex-1 flex items-center justify-center w-full max-w-md md:max-w-xl lg:max-w-md mx-auto lg:mx-0">
             <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-primary/10 flex items-center justify-center">
-              <img
+              {/* <img
                 src={"/dashboard.png" || FINANCE_IMAGE}
                 alt="Finance security illustration"
                 className="w-full h-full object-cover object-center"
                 loading="lazy"
                 style={{ filter: "saturate(1.1) contrast(1.05)" }}
-              />
+              /> */}
+              <FontAwesomeIcon icon={icon} size="10x" />
               {/* Accent ring */}
               <div className="absolute inset-0 ring-2 ring-primary/30 rounded-2xl pointer-events-none" />
             </div>
@@ -47,7 +51,9 @@ const Products = ({
             </h2>
             {/* Italic Text */}
             {italicText && (
-              <p className="italic text-accent-dark text-base">{italicText}</p>
+              <p className="text-accent-dark text-base leading-relaxed">
+                {italicText}
+              </p>
             )}
             <p className="text-accent-dark text-base leading-relaxed">{desc}</p>
             <ul className="space-y-1">

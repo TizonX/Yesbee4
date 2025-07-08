@@ -192,11 +192,11 @@ export default function Navbar() {
                       />
                     ) : (
                       <span className="flex items-center justify-center w-full h-full text-white">
-                        {user?.fullname}
+                        {user?.fullname && user?.fullname[0]}
                       </span>
                     )}
                   </div>
-                  <span>{user.name}</span>
+                  <span>{user?.name}</span>
                   <svg
                     className="w-4 h-4 transition-transform group-hover:rotate-180"
                     fill="none"
@@ -233,17 +233,17 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-4 ml-8">
-                <Link
+                {/* <Link
                   href="/login"
                   className="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
                 >
                   Sign in
-                </Link>
+                </Link> */}
                 <Link
-                  href="/signup"
+                  href="/login" // signup
                   className="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-primary hover:bg-primary-dark transition-colors"
                 >
-                  Sign up
+                  SignIn
                 </Link>
               </div>
             )}

@@ -36,7 +36,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            AI Powered Business Backbone{" "}
+            AI Powered Finance Foresight{" "}
             <span className="relative whitespace-nowrap">
               <span className="relative bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"></span>
             </span>
@@ -48,7 +48,10 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Your business deserves more than reports. It deserves intelligence.
+            Your business deserves more than reports. It deserves Intelligence.
+            <br />
+            Still relying on old-school spreadsheets? Step into AI-powered
+            finance that transforms your data into clear, actionable insights.
           </motion.p>
           <motion.div
             className="mt-10 flex items-center justify-center gap-x-6 hidden"

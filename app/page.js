@@ -10,6 +10,7 @@ import FAQ from "./components/FAQ";
 import CTASection from "./components/CTASection";
 import Products from "./components/Products";
 import Banner from "./components/Banner";
+import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
   const products = [
@@ -21,33 +22,34 @@ export default function Home() {
         "No training on your data",
         "You own and manage access",
         "Compliant with MeitY & CERT-In guidelines",
+        "Built for Global businesses. Hence, backed by global security standards.",
       ],
       reverse: false,
+      icon: faShieldHalved,
     },
     {
-      title: "Cashflow Planner",
-      desc: `AI planner with smart alerts for collections, shortfalls, and cash position.`,
+      title: "Cash Flow Planner",
+      desc: `Streamline your cash flow management by receiving alerts for collections and potential cash shortages, enabling you to make proactive adjustments to ensure smooth financial operations.`,
       italicText: `Stay alert. Stay ahead.`,
       reverse: true,
     },
     {
       title: "Sales Analysis",
-      desc: `sales performance by branch or product with benchmarks.`,
+      desc: `Streamline your cash flow management by receiving alerts for collections and potential cash shortages, enabling you to make proactive adjustments to ensure smooth financial operations.`,
       italicText: `Sales clarity, on demand.`,
       reverse: false,
     },
   ];
-
   const products2 = [
     {
       title: "Business Valuation",
-      desc: `Automated valuation using DCF, market-based, and hybrid models.`,
+      desc: `Automated valuation using DCF, EBITDA multiples, Sensitivity Analysis and Monte Carlo Simulation ensuring you get a fair and accurate estimate for strategic decisions or selling.`,
       italicText: "Know your true worth.",
       reverse: true,
     },
     {
-      title: "Financial Modeling",
-      desc: `P&L, cash flow, and balance sheet forecasts — all in one place.`,
+      title: "Financial Modelling",
+      desc: `Custom financial models with 3-, 5-, 7- or 10-year projections including P&L, Cash Flows and Balance Sheet forecast tailored to your needs, giving you a clear outlook on future performance and business growth potential.`,
       italicText: `Plan beyond instinct.`,
       reverse: false,
     },
@@ -55,13 +57,13 @@ export default function Home() {
   const products3 = [
     {
       title: "Financial Safety",
-      desc: `Instant health check using the trusted Piotroski F-Score model.`,
+      desc: `Instant financial health checking using the trusted Piotroski’s F-Score helping you understand whether you are on the right financial track or if any adjustments are needed to stay competitive and profitable.`,
       italicText: "Your financial safety net.",
       reverse: false,
     },
     {
       title: "Fraud Detection",
-      desc: `AI-powered detection of suspicious activity and financial anomalies.`,
+      desc: `AI powered detection of suspicious activity and financial anomalies using Beneish M-Score, Benford’s Law, the Modified  Jones Model , Altman Z-score`,
       italicText: `Catch what others miss.`,
       reverse: true,
     },
@@ -72,7 +74,7 @@ export default function Home() {
       <Hero />
       <Services />
       {products?.map(
-        ({ title, desc, italicText, bulletPoints, reverse }, index) => (
+        ({ title, desc, italicText, bulletPoints, reverse, icon }, index) => (
           <Products
             key={index}
             title={title}
@@ -80,6 +82,7 @@ export default function Home() {
             italicText={italicText}
             bulletPoints={bulletPoints}
             reverse={reverse}
+            icon={icon}
           />
         )
       )}

@@ -124,16 +124,10 @@ const services = [
 ];
 const features = [
   {
-    title: "CashFlow Planner",
+    title: "Cash Flow Planner",
     description:
       "AI planner with smart alerts for collections, shortfalls, and cash position.",
     image: "/path-to-your-image/bill.png", // Update image paths
-  },
-  {
-    title: "Business Valuation",
-    description:
-      "Automated business valuation using DCF, market, and hybrid methods.",
-    image: "/path-to-your-image/reimburse.png",
   },
   {
     title: "Sales Analysis",
@@ -142,9 +136,15 @@ const features = [
     image: "/path-to-your-image/checking.png",
   },
   {
-    title: "Financial Modeling",
+    title: "Business Valuation",
     description:
-      "Forecast builder with integrated P&L, cash flow, and balance sheet tools.",
+      "Automated business valuation using DCF, EBITDA multiples and hybrid methods. ( for unlisted companies) ",
+    image: "/path-to-your-image/reimburse.png",
+  },
+
+  {
+    title: "Financial Modeling",
+    description: "Instant financial health check using Piotroski’s F-Score",
     image: "/path-to-your-image/card.png",
   },
   {
@@ -154,19 +154,19 @@ const features = [
   },
   {
     title: "Fraud Detection",
-    description: `AI tool for detecting fraud and unusual patterns`,
+    description: `AI powered tools to detect fraud, anomalies and suspicious patterns with precision. `,
     image: "/path-to-your-image/loan.png",
   },
   {
     title: "Virtual CFO service",
-    description: "Let experts handle your financial planning and strategy.",
+    description: "Let experts handle your financial planning and strategy. ",
     image: "/path-to-your-image/loan.png",
   },
-  {
-    title: "Financial Metrics",
-    description: `Business scoring engine based on industry benchmarks`,
-    image: "/path-to-your-image/loan.png",
-  },
+  // {
+  //   title: "Financial Metrics",
+  //   description: `Business scoring engine based on industry benchmarks`,
+  //   image: "/path-to-your-image/loan.png",
+  // },
 ];
 
 export default function Services() {
@@ -226,7 +226,7 @@ export default function Services() {
         {features.map((item, index) => (
           <div
             key={index}
-            className=" group bg-background-light rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4 flex flex-col cursor-pointer"
+            className="group bg-background-light hover:bg-background-gray rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4 flex flex-col cursor-pointer"
           >
             <div className="overflow-hidden rounded-lg mb-4">
               <img

@@ -41,10 +41,10 @@ export default function LoginPage() {
           <p className="mt-2 text-sm text-gray-600">
             Don't have an account?{" "}
             <Link
-              href="/auth/signup"
-              className="font-medium text-primary hover:text-primary-dark transition-colors"
+              href="/signup"
+              className="font-medium text-primary-linkHover hover:text-primary-link transition-colors"
             >
-              Sign up
+              Sign-up!
             </Link>
           </p>
         </div>
@@ -87,9 +87,9 @@ export default function LoginPage() {
             <div className="text-sm">
               <Link
                 href="/auth/forgot-password"
-                className="font-medium text-primary hover:text-primary-dark transition-colors"
+                className="font-medium text-primary-linkHover hover:text-primary-link transition-colors"
               >
-                Forgot your password?
+                Forgot password?
               </Link>
             </div>
           </div>
