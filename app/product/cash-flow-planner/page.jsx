@@ -7,11 +7,22 @@ import Input from "../../components/ui/Input";
 import { apiRequest } from "../../lib/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { faChartSimple, faInbox } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartSimple,
+  faEnvelope,
+  faInbox,
+} from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 const PRODUCT_TITLE = "CashFlow Planner with Smart Alerts";
-const PRODUCT_DESC =
-  "Is your business profitable but still struggling with cash flow? You’re not alone—80% of MSMEs face cash crunches due to delayed collections and lack of visibility.";
+const PRODUCT_DESC = (
+  <>
+    Is your business profitable but still struggling with cash flow?
+    <br />
+    You’re not alone—80% of MSMEs face cash crunches due to delayed collections
+    and lack of visibility.
+  </>
+);
 const SAMPLE_CSV_URL = "/sample-cashflow.xlsm";
 
 // Add this helper function for reading CSV file preview
@@ -386,52 +397,79 @@ export default function CashFlowPlannerPage() {
         <div className="flex flex-col lg:flex-row gap-10 items-stretch">
           {/* Left: Title & Description */}
           <div className="flex-1 flex flex-col justify-center mb-8 lg:mb-0">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            <h1 className="text-3xl md:text-3xl font-bold text-primary mb-4">
               {PRODUCT_TITLE}
             </h1>
             <p className="text-accent-dark text-base">{PRODUCT_DESC}</p>
             {/* icons */}
-            <div className="flex flex-wrap gap-md justify-start py-10">
-              {/* WhatsApp */}
-              <div className="flex items-center gap-sm group cursor-pointer">
-                <div className="p-xs bg-success/10 rounded-full group-hover:bg-success/20 transition duration-DEFAULT shadow-sm">
-                  <FontAwesomeIcon
-                    icon={faWhatsapp}
-                    className="w-5 h-5 text-success group-hover:scale-110 group-hover:text-success transition-transform duration-DEFAULT flex items-center justify-center"
-                  />
+            <div className="py-5">
+              <h6 className="text-accent-dark text-base py-5">
+                Stay Ahead with Real-Time Alerts via:
+              </h6>
+              <div className="flex flex-wrap gap-3xl justify-start">
+                {/* WhatsApp */}
+                <div className="flex flex-row md:flex-col  items-center gap-sm group cursor-pointer">
+                  <div className="p-xs bg-success/10 rounded-full group-hover:bg-success/20 transition duration-DEFAULT shadow-sm">
+                    {/* <FontAwesomeIcon
+                      icon={faWhatsapp}
+                      className="w-5 h-5 text-success group-hover:scale-110 group-hover:text-success transition-transform duration-DEFAULT flex items-center justify-center"
+                    /> */}
+                    <div className="w-5 h-5 relative flex items-center justify-center group-hover:scale-110 transition-transform duration-DEFAULT">
+                      <Image
+                        src="/icons/whatsapp.png" // replace with your image path
+                        alt="whatsapp"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
+                    WhatsApp
+                  </span>
                 </div>
-                <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
-                  WhatsApp Alerts
-                </span>
-              </div>
-
-              {/* Email */}
-              <div className="flex items-center gap-sm group cursor-pointer">
-                <div className="p-xs bg-secondary/10 rounded-full group-hover:bg-secondary/20 transition duration-DEFAULT shadow-sm">
-                  <FontAwesomeIcon
-                    icon={faInbox}
-                    className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform duration-DEFAULT flex items-center justify-center"
-                  />
+                {/* Email */}
+                <div className="flex flex-row md:flex-col items-center gap-sm group cursor-pointer">
+                  <div className="p-xs bg-secondary/10 rounded-full group-hover:bg-secondary/20 transition duration-DEFAULT shadow-sm">
+                    {/* <FontAwesomeIcon
+                      icon={faEnvelope}
+                      className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform duration-DEFAULT flex items-center justify-center"
+                    />
+                     */}
+                    <div className="w-5 h-5 relative flex items-center justify-center group-hover:scale-110 transition-transform duration-DEFAULT">
+                      <Image
+                        src="/icons/email.png" // replace with your image path
+                        alt="Email"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
+                    Email
+                  </span>
                 </div>
-                <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
-                  Email Notifications
-                </span>
-              </div>
-
-              {/* Excel Dashboard */}
-              <div className="flex items-center gap-sm group cursor-pointer">
-                <div className="p-xs bg-accent-dark/10 rounded-full group-hover:bg-accent-dark/20 transition duration-DEFAULT shadow-sm">
-                  <FontAwesomeIcon
-                    icon={faChartSimple}
-                    className="w-5 h-5 text-accent-dark group-hover:scale-110 transition-transform duration-DEFAULT flex items-center justify-center"
-                  />
+                {/* Excel Dashboard */}
+                <div className="flex flex-row md:flex-col items-center gap-sm group cursor-pointer">
+                  <div className="p-xs bg-accent-dark/10 rounded-full group-hover:bg-accent-dark/20 transition duration-DEFAULT shadow-sm">
+                    {/* <FontAwesomeIcon
+                      icon={faChartSimple}
+                      className="w-5 h-5 text-accent-dark group-hover:scale-110 transition-transform duration-DEFAULT flex items-center justify-center"
+                    /> */}
+                    <div className="w-5 h-5 relative flex items-center justify-center group-hover:scale-110 transition-transform duration-DEFAULT">
+                      <Image
+                        src="/icons/logo.png" // replace with your image path
+                        alt="Excel Dashboard"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
+                    Excel Dashboard
+                  </span>
                 </div>
-                <span className="text-primary group-hover:text-primary-light font-medium transition duration-DEFAULT">
-                  Excel Dashboard
-                </span>
               </div>
             </div>
-
             {/* Button group for sample preview toggle and download */}
             <div className="flex flex-col sm:flex-row gap-3 mb-4 w-full sm:w-fit">
               <button
@@ -565,7 +603,7 @@ export default function CashFlowPlannerPage() {
           </div>
 
           {/* Right: Upload/Preview */}
-          <div className="flex-1 flex flex-col items-center justify-start w-full min-w-[320px] min-h-[340px] transition-all duration-300">
+          <div className="flex-1 flex flex-col items-center justify-start w-full min-w-[320px] min-h-[340px] transition-all duration-300 mt-12">
             {/* Upload Section */}
             {!showPreview && !showSamplePreview && (
               <div
@@ -672,10 +710,10 @@ export default function CashFlowPlannerPage() {
                     />
                   </svg>
                   <span className="text-accent-dark text-base font-medium text-center select-none px-2">
-                    Drag & drop your Excel file here
+                    Drag & drop Excel here
                     <br className="hidden sm:block" />
                     <span className="text-xs text-accent-dark">
-                      or click to select
+                      or <br /> Browse File
                     </span>
                   </span>
                   {fileName && (
