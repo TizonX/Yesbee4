@@ -14,7 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
-const PRODUCT_TITLE = "CashFlow Planner with Smart Alerts";
+const PRODUCT_TITLE = "Cash Flow Planner with Smart Alerts";
 const PRODUCT_DESC = (
   <>
     Is your business profitable but still struggling with cash flow?
@@ -23,7 +23,7 @@ const PRODUCT_DESC = (
     and lack of visibility.
   </>
 );
-const SAMPLE_CSV_URL = "/sample-cashflow.xlsm";
+const SAMPLE_CSV_URL = "/sample-cashflow.xlsx";
 
 // Add this helper function for reading CSV file preview
 function readCSVPreview(file, cb) {
@@ -201,7 +201,6 @@ export default function CashFlowPlannerPage() {
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         droppedFile.type === "application/vnd.ms-excel" ||
         droppedFile.name.toLowerCase().endsWith(".xlsx") ||
-        droppedFile.name.toLowerCase().endsWith(".xlsm") ||
         droppedFile.name.toLowerCase().endsWith(".xls");
 
       if (isExcel) {
@@ -211,7 +210,6 @@ export default function CashFlowPlannerPage() {
       }
     }
   };
-
   // File input handler
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -221,7 +219,6 @@ export default function CashFlowPlannerPage() {
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         selected.type === "application/vnd.ms-excel" ||
         selected.name.toLowerCase().endsWith(".xlsx") ||
-        selected.name.toLowerCase().endsWith(".xlsm") ||
         selected.name.toLowerCase().endsWith(".xls");
 
       if (isExcel) {
@@ -291,7 +288,6 @@ export default function CashFlowPlannerPage() {
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         blob.type === "application/vnd.ms-excel" ||
         processedFile.name.toLowerCase().endsWith(".xlsx") ||
-        processedFile.name.toLowerCase().endsWith(".xlsm") ||
         processedFile.name.toLowerCase().endsWith(".xls")
       ) {
         // Excel file
@@ -324,7 +320,6 @@ export default function CashFlowPlannerPage() {
       setTimeout(() => setStatus(""), 3000);
     }
   };
-
   // Reset all
   const handleReset = () => {
     setFile(null);
@@ -336,7 +331,6 @@ export default function CashFlowPlannerPage() {
     setProcessedFileName("");
     setProcessedFileData([]);
   };
-
   // Download uploaded file
   const handleDownload = () => {
     if (!file) return;
@@ -349,7 +343,6 @@ export default function CashFlowPlannerPage() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
-
   // Download processed file
   const handleDownloadProcessed = () => {
     if (!processedFile) return;
@@ -362,17 +355,15 @@ export default function CashFlowPlannerPage() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
-
   // Download sample CSV
   const handleSampleDownload = () => {
     const a = document.createElement("a");
     a.href = SAMPLE_CSV_URL;
-    a.download = "sample-cashflow.xlsm";
+    a.download = "sample-cashflow.xlsx";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
   };
-
   // Add a helper to reset drag-drop UI state and focus
   const resetUploadUI = () => {
     setFile(null);
@@ -389,10 +380,9 @@ export default function CashFlowPlannerPage() {
       dropRef.current.blur();
     }
   };
-
   // Responsive layout
   return (
-    <Section className="min-h-[80vh] flex items-center justify-center">
+    <Section className="min-h-[80vh] flex items-center justify-center mt-14">
       <Container>
         <div className="flex flex-col lg:flex-row gap-10 items-stretch">
           {/* Left: Title & Description */}
@@ -408,13 +398,13 @@ export default function CashFlowPlannerPage() {
               </h6>
               <div className="flex flex-wrap gap-3xl justify-start">
                 {/* WhatsApp */}
-                <div className="flex flex-row md:flex-col  items-center gap-sm group cursor-pointer">
+                <div className="flex flex-row md:flex-col  items-center gap-sm group">
                   <div className="p-xs bg-success/10 rounded-full group-hover:bg-success/20 transition duration-DEFAULT shadow-sm">
                     {/* <FontAwesomeIcon
                       icon={faWhatsapp}
                       className="w-5 h-5 text-success group-hover:scale-110 group-hover:text-success transition-transform duration-DEFAULT flex items-center justify-center"
                     /> */}
-                    <div className="w-5 h-5 relative flex items-center justify-center group-hover:scale-110 transition-transform duration-DEFAULT">
+                    <div className="w-5 h-5 relative flex items-center justify-center transition-transform duration-DEFAULT">
                       <Image
                         src="/icons/whatsapp.png" // replace with your image path
                         alt="whatsapp"
@@ -428,14 +418,14 @@ export default function CashFlowPlannerPage() {
                   </span>
                 </div>
                 {/* Email */}
-                <div className="flex flex-row md:flex-col items-center gap-sm group cursor-pointer">
+                <div className="flex flex-row md:flex-col items-center gap-sm group">
                   <div className="p-xs bg-secondary/10 rounded-full group-hover:bg-secondary/20 transition duration-DEFAULT shadow-sm">
                     {/* <FontAwesomeIcon
                       icon={faEnvelope}
                       className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform duration-DEFAULT flex items-center justify-center"
                     />
                      */}
-                    <div className="w-5 h-5 relative flex items-center justify-center group-hover:scale-110 transition-transform duration-DEFAULT">
+                    <div className="w-5 h-5 relative flex items-center justify-center transition-transform duration-DEFAULT">
                       <Image
                         src="/icons/email.png" // replace with your image path
                         alt="Email"
@@ -449,13 +439,13 @@ export default function CashFlowPlannerPage() {
                   </span>
                 </div>
                 {/* Excel Dashboard */}
-                <div className="flex flex-row md:flex-col items-center gap-sm group cursor-pointer">
+                <div className="flex flex-row md:flex-col items-center gap-sm group">
                   <div className="p-xs bg-accent-dark/10 rounded-full group-hover:bg-accent-dark/20 transition duration-DEFAULT shadow-sm">
                     {/* <FontAwesomeIcon
                       icon={faChartSimple}
                       className="w-5 h-5 text-accent-dark group-hover:scale-110 transition-transform duration-DEFAULT flex items-center justify-center"
                     /> */}
-                    <div className="w-5 h-5 relative flex items-center justify-center group-hover:scale-110 transition-transform duration-DEFAULT">
+                    <div className="w-5 h-5 relative flex items-center justify-center transition-transform duration-DEFAULT">
                       <Image
                         src="/icons/logo.png" // replace with your image path
                         alt="Excel Dashboard"
@@ -505,7 +495,7 @@ export default function CashFlowPlannerPage() {
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-cover opacity-25"
+                className="w-full h-full object-cover"
               />
             </div>
             {/* Sample Preview Modal */}
@@ -603,7 +593,7 @@ export default function CashFlowPlannerPage() {
           </div>
 
           {/* Right: Upload/Preview */}
-          <div className="flex-1 flex flex-col items-center justify-start w-full min-w-[320px] min-h-[340px] transition-all duration-300 mt-12">
+          <div className="flex-1 flex flex-col items-center justify-start w-full min-w-[320px] min-h-[340px] transition-all duration-300">
             {/* Upload Section */}
             {!showPreview && !showSamplePreview && (
               <div
@@ -712,7 +702,7 @@ export default function CashFlowPlannerPage() {
                   <span className="text-accent-dark text-base font-medium text-center select-none px-2">
                     Drag & drop Excel here
                     <br className="hidden sm:block" />
-                    <span className="text-xs text-accent-dark">
+                    <span className="text-md text-accent-dark">
                       or <br /> Browse File
                     </span>
                   </span>
@@ -728,7 +718,7 @@ export default function CashFlowPlannerPage() {
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept=".xlsx,.xlsm,.xls"
+                  accept=".xlsx,.xls"
                   className="hidden"
                   onChange={handleFileChange}
                 />
@@ -818,7 +808,7 @@ export default function CashFlowPlannerPage() {
                     <div className="text-sm text-blue-800">
                       <p className="font-medium mb-1">File Requirements:</p>
                       <ul className="space-y-1 text-xs">
-                        <li>• Only Excel files (.xlsm, .xlsx) are supported</li>
+                        <li>• Only Excel files (.xlsx, .xls) are supported</li>
                         <li>
                           • Watch the quick tutorial video to see exactly how to
                           upload your data.

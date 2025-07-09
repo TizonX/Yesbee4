@@ -243,7 +243,7 @@ export default function Navbar() {
                   href="/login" // signup
                   className="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-primary hover:bg-primary-dark transition-colors"
                 >
-                  SignIn
+                  Sign In
                 </Link>
               </div>
             )}

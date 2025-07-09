@@ -162,11 +162,11 @@ const features = [
     description: "Let experts handle your financial planning and strategy. ",
     image: "/path-to-your-image/loan.png",
   },
-  // {
-  //   title: "Financial Metrics",
-  //   description: `Business scoring engine based on industry benchmarks`,
-  //   image: "/path-to-your-image/loan.png",
-  // },
+  {
+    title: "Financial Metrics",
+    description: `Business scoring engine based on industry benchmarks`,
+    image: "/path-to-your-image/loan.png",
+  },
 ];
 
 export default function Services() {
