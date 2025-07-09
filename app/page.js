@@ -11,9 +11,11 @@ import CTASection from "./components/CTASection";
 import Products from "./components/Products";
 import Banner from "./components/Banner";
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
+import Container from "./components/Container";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const products = [
+  const singleProduct = [
     {
       title: "Your Data. Your Control.",
       desc: `At yesbee4.ai, your business data stays private, secure, and fully under your control always.`,
@@ -27,6 +29,8 @@ export default function Home() {
       reverse: false,
       icon: faShieldHalved,
     },
+  ];
+  const products = [
     {
       title: "Cash Flow Planner",
       desc: `Streamline your cash flow management by receiving alerts for collections and potential cash shortages, enabling you to make proactive adjustments to ensure smooth financial operations.`,
@@ -73,6 +77,32 @@ export default function Home() {
       {/* <ProductComponent /> */}
       <Hero />
       <Services />
+      {singleProduct?.map(
+        ({ title, desc, italicText, bulletPoints, reverse, icon }, index) => (
+          <Products
+            key={index}
+            title={title}
+            desc={desc}
+            italicText={italicText}
+            bulletPoints={bulletPoints}
+            reverse={reverse}
+            icon={icon}
+          />
+        )
+      )}
+      <Container className="relative pt-20 pb-32 md:pt-24 md:pb-32 lg:pt-10 lg:pb-10">
+        <div className="mx-auto max-w-4xl text-center mt-1">
+          <motion.h1
+            className="font-display text-4xl font-bold tracking-tight text-primary sm:text-6xl lg:text-6xl"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }} // ✅ Change this
+            transition={{ duration: 0.9 }}
+            viewport={{ once: true, amount: 0.5 }}
+          >
+            A GLIMPSE OF WHAT RUNS UNDER THE HOOD
+          </motion.h1>
+        </div>
+      </Container>
       {products?.map(
         ({ title, desc, italicText, bulletPoints, reverse, icon }, index) => (
           <Products
@@ -86,6 +116,7 @@ export default function Home() {
           />
         )
       )}
+
       <Banner />
       {products2?.map(
         ({ title, desc, italicText, bulletPoints, reverse }, index) => (
