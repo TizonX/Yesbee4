@@ -13,6 +13,7 @@ import {
   faInbox,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import * as XLSX from "xlsx";
 
 const PRODUCT_TITLE = "Cash Flow Planner with Smart Alerts";
 const PRODUCT_DESC = (
@@ -36,6 +37,7 @@ function readCSVPreview(file, cb) {
 
 // Add helper function for reading Excel file preview
 function readExcelPreview(file, cb) {
+  console.log("file : ", file);
   const reader = new FileReader();
   reader.onload = (e) => {
     try {
@@ -68,6 +70,17 @@ function parseCSV(text) {
 
 function TablePreview({ data }) {
   if (!data || !data.length) return null;
+
+  const formatCell = (cell) => {
+    if (typeof cell === "number") {
+      return new Intl.NumberFormat("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(cell);
+    }
+    return String(cell);
+  };
+
   return (
     <div className="overflow-x-auto rounded-lg border border-primary/10 bg-background-light shadow-sm">
       <table className="min-w-full text-xs md:text-sm">
@@ -78,7 +91,7 @@ function TablePreview({ data }) {
                 key={idx}
                 className="px-4 py-3 bg-primary text-white font-semibold text-left border-b border-primary/20"
               >
-                {cell}
+                {formatCell(cell)}
               </th>
             ))}
           </tr>
@@ -87,16 +100,14 @@ function TablePreview({ data }) {
           {data.slice(1).map((row, i) => (
             <tr
               key={i}
-              className={
-                "transition-colors even:bg-white odd:bg-background-light hover:bg-primary/5"
-              }
+              className="transition-colors even:bg-white odd:bg-background-light hover:bg-primary/5"
             >
               {row.map((cell, j) => (
                 <td
                   key={j}
                   className="px-4 py-2 text-accent-dark border-t border-primary/10 whitespace-nowrap"
                 >
-                  {cell}
+                  {formatCell(cell)}
                 </td>
               ))}
             </tr>
@@ -282,6 +293,7 @@ export default function CashFlowPlannerPage() {
       setProcessedFile(processedFile);
       setProcessedFileName(processedFile.name);
 
+      console.log("step 1: ", processedFile);
       // Parse the file data for preview based on content type
       if (
         blob.type ===
@@ -292,8 +304,11 @@ export default function CashFlowPlannerPage() {
       ) {
         // Excel file
         readExcelPreview(processedFile, (data) => {
+          console.log("Parsed Excel Data:", data);
           setProcessedFileData(parseExcelData(data));
+          console.log("step: ", parseExcelData(data));
         });
+        console.log("step 2: ", processedFileData);
       } else {
         // Unknown file type, try to detect from content
         const reader = new FileReader();
@@ -302,9 +317,11 @@ export default function CashFlowPlannerPage() {
           if (content.includes(",") && content.includes("\n")) {
             // Likely CSV - but we don't support CSV uploads, so show empty
             setProcessedFileData([]);
+            console.log("step 3: ", processedFileData);
           } else {
             // Set empty data for unknown types
             setProcessedFileData([]);
+            console.log("step 4: ", processedFileData);
           }
         };
         reader.readAsText(processedFile);
