@@ -35,7 +35,7 @@ const contactInfo = [
   {
     title: "Address",
     content:
-      "1Yesbee4ai Systems & Solutions LLP 301,\n MM LAKEVIEW, ROYAL ENCLAVE, JAKKUR, Bangalore 560064.",
+      "Yesbee4ai Systems & Solutions LLP 301,\n MM LAKEVIEW, ROYAL ENCLAVE, JAKKUR, Bangalore 560064.",
     icon: (
       <svg
         className="h-6 w-6"
@@ -155,7 +155,7 @@ export default function ContactContent() {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background-dark/50 to-transparent" />
           </motion.div>
         </div>
       </div>
