@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 export default function ContactHero() {
   return (
@@ -26,10 +26,10 @@ export default function ContactHero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mx-auto mt-6 max-w-2xl text-lg text-accent-dark"
           >
-            We're here to help you achieve your financial goals. Our team of experts is ready to assist you with any questions or concerns you may have.
+            Get your questions answered. We’d love to hear from you!
           </motion.p>
         </motion.div>
       </div>
     </div>
   );
-} 
+}
